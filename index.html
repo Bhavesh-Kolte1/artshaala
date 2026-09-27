@@ -1,0 +1,1481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Artshaala — Hand-painted Indian earrings</title>
+    <meta
+      name="description"
+      content="Hand-painted earrings inspired by color, craft and the everyday poetry of India."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== Design tokens ===== */
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --paper-deep: #dcc8a0;
+        --ink: #2b201b;
+        --ink-soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --turmeric: #d8a01c;
+        --marigold: #df7a1c;
+        --teal: #1d6b6c;
+        --indigo: #29397a;
+        --terracotta: #a4502f;
+        --pink: #c98b8b;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --f-display: "Cormorant Garamond", "Rozha One", Georgia, serif;
+        --f-body: "Jost", system-ui, sans-serif;
+        --f-hand: "Kalam", "Segoe Script", cursive;
+        --track: 0.22em;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+        --chain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpath d='M12 1l5 4-5 4-5-4z' fill='none' stroke='%23a5832f' stroke-width='1.2'/%3E%3Ccircle cx='0' cy='5' r='1.2' fill='%23a5832f'/%3E%3Ccircle cx='24' cy='5' r='1.2' fill='%23a5832f'/%3E%3C/svg%3E");
+        --dots: radial-gradient(
+            circle,
+            rgba(244, 234, 214, 0.55) 2px,
+            transparent 2.5px
+          )
+          0 0/16px 16px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font: 400 1rem/1.6 var(--f-body);
+        color: var(--ink);
+        background: var(--ivory) var(--grain);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--f-display);
+        font-weight: 600;
+        line-height: 1.02;
+      }
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      .hand {
+        font-family: var(--f-hand);
+      }
+      .rule {
+        height: 10px;
+        background: var(--chain) repeat-x center;
+      }
+
+      /* Buttons: tactile, hard-edged elevation */
+      .btn {
+        display: inline-block;
+        font: 500 0.74rem/1 var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.sm {
+        padding: 0.75rem 1rem;
+        font-size: 0.66rem;
+        box-shadow: 2px 2px 0 var(--ink);
+      }
+      .badge {
+        display: inline-block;
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.6rem;
+        background: var(--turmeric);
+        color: var(--ink);
+        border: 1px solid var(--ink);
+      }
+      .frame {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+        background: var(--parchment) var(--grain);
+      }
+
+      /* ===== Header ===== */
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+        position: relative;
+      }
+      .strip::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 10px;
+        background: var(--chain) repeat-x;
+        opacity: 0;
+      }
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--ivory) var(--grain);
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .site-head::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -11px;
+        height: 10px;
+        background: var(--chain) repeat-x center;
+        pointer-events: none;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font: 700 1.7rem/1 var(--f-display);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+      .logo b {
+        color: var(--vermilion);
+        font-weight: 700;
+      }
+      .links {
+        display: none;
+        gap: 2rem;
+        list-style: none;
+        padding: 0;
+      }
+      .links a {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+        background: linear-gradient(var(--vermilion), var(--vermilion)) 0 100%/0
+          2px no-repeat;
+        transition: background-size 0.25s;
+      }
+      .links a:hover {
+        background-size: 100% 2px;
+      }
+      .tools {
+        display: flex;
+        gap: 0.2rem;
+      }
+      .ic {
+        position: relative;
+        background: none;
+        border: 0;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .ic svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+      }
+      .ic i {
+        position: absolute;
+        top: 4px;
+        right: 2px;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font: 500 0.62rem/17px var(--f-body);
+        text-align: center;
+        font-style: normal;
+      }
+      .ic i:empty,
+      .ic i[data-n="0"] {
+        display: none;
+      }
+      .burger {
+        display: grid;
+      }
+      .site-head.open .links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: var(--ivory) var(--grain);
+        padding: 1.2rem var(--pad) 1.6rem;
+        border-bottom: 1.5px solid var(--ink);
+      }
+      @media (min-width: 900px) {
+        .links {
+          display: flex;
+        }
+        .burger {
+          display: none;
+        }
+      }
+
+      /* ===== Hero ===== */
+      .hero {
+        display: grid;
+        gap: 2.5rem;
+        padding: 3.5rem var(--pad) 4rem;
+        max-width: 1440px;
+        margin: auto;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: clamp(3.4rem, 11vw, 7.6rem);
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        color: var(--wine);
+        margin: 0.8rem 0 1.4rem;
+      }
+      .hero h1 span {
+        display: block;
+        color: var(--vermilion);
+        font-style: italic;
+        text-transform: none;
+        font-weight: 500;
+      }
+      .hero p {
+        max-width: 30rem;
+        font-size: 1.12rem;
+        color: var(--ink-soft);
+        margin-bottom: 2rem;
+      }
+      .ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .collage {
+        position: relative;
+        min-height: min(112vw, 620px);
+      }
+      .collage::before {
+        content: "";
+        position: absolute;
+        inset: 6% 2% 0 8%;
+        background: var(--paper-deep) var(--grain);
+        border: 1.5px solid var(--ink);
+        transform: rotate(2deg);
+      }
+      .pic {
+        position: absolute;
+        margin: 0;
+        padding: 0.55rem 0.55rem 2.3rem;
+        background: var(--ivory);
+        border: 1px solid var(--ink);
+        box-shadow: 5px 6px 0 rgba(43, 32, 27, 0.22);
+        transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .pic img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .pic::before {
+        content: "";
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        width: 74px;
+        height: 22px;
+        transform: translateX(-50%) rotate(-3deg);
+        background: rgba(216, 160, 28, 0.6);
+        border-left: 1px dashed rgba(43, 32, 27, 0.3);
+        border-right: 1px dashed rgba(43, 32, 27, 0.3);
+      }
+      .pic figcaption {
+        position: absolute;
+        left: 0.7rem;
+        bottom: 0.4rem;
+        font: 0.95rem var(--f-hand);
+        color: var(--ink-soft);
+      }
+      .p1 {
+        width: 58%;
+        height: 78%;
+        left: 7%;
+        top: 4%;
+        transform: rotate(-3deg);
+      }
+      .p2 {
+        width: 40%;
+        height: 44%;
+        right: 2%;
+        top: 0;
+        transform: rotate(4deg);
+        background: var(--parchment);
+      }
+      .p3 {
+        width: 42%;
+        height: 46%;
+        right: 5%;
+        bottom: 3%;
+        transform: rotate(-2deg);
+      }
+      .collage:hover .p1 {
+        transform: rotate(-1.5deg) translateY(-4px);
+      }
+      .collage:hover .p2 {
+        transform: rotate(2deg) translateY(-6px);
+      }
+      .collage:hover .p3 {
+        transform: rotate(-0.5deg) translateY(-4px);
+      }
+      .label {
+        position: absolute;
+        left: 2%;
+        bottom: 6%;
+        z-index: 3;
+        background: var(--turmeric);
+        border: 1.5px solid var(--ink);
+        padding: 0.45rem 1.1rem;
+        font: 1.35rem var(--f-hand);
+        transform: rotate(-6deg);
+        box-shadow: 3px 3px 0 var(--ink);
+      }
+      .sprig {
+        position: absolute;
+        z-index: 2;
+        right: -1%;
+        top: 44%;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background:
+          radial-gradient(
+            circle,
+            var(--marigold) 0 22%,
+            var(--turmeric) 23% 34%,
+            transparent 35%
+          ),
+          repeating-conic-gradient(
+            var(--marigold) 0 12deg,
+            transparent 12deg 30deg
+          );
+        -webkit-mask: radial-gradient(circle, #000 0 62%, transparent 63%);
+        mask: radial-gradient(circle, #000 0 62%, transparent 63%);
+        opacity: 0.9;
+      }
+      @media (min-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr 1.1fr;
+          padding-top: 4.5rem;
+        }
+        .collage {
+          min-height: 660px;
+        }
+      }
+
+      /* ===== Section scaffolding ===== */
+      .sec {
+        padding: 5rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .sec-head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: end;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+      }
+      .sec-head h2 {
+        font-size: clamp(2.3rem, 6vw, 4.2rem);
+        color: var(--wine);
+      }
+      .sec-head p {
+        font: 1.25rem/1.3 var(--f-display);
+        font-style: italic;
+        color: var(--ink-soft);
+        max-width: 22rem;
+      }
+
+      /* =====  the mood ===== */
+      .moods {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+      .mood {
+        position: relative;
+        min-height: 260px;
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--ivory);
+        border: 1.5px solid var(--ink);
+        display: flex;
+        align-items: flex-end;
+        padding: 1.2rem;
+        isolation: isolate;
+      }
+      .mood img {
+        position: absolute;
+        z-index: -1;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .mood:hover img {
+        transform: scale(1.05);
+      }
+      .mood h3 {
+        font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+        text-transform: uppercase;
+        line-height: 0.95;
+      }
+      .mood small {
+        display: block;
+        font-size: 0.66rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        margin-top: 0.5rem;
+        opacity: 0.85;
+      }
+      .m-bold {
+        grid-column: 1/-1;
+        background: var(--vermilion);
+      }
+      .m-bold::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background: var(--dots);
+      }
+      .m-bold img {
+        right: 8%;
+        top: 8%;
+        width: 52%;
+        height: 78%;
+        border: 6px solid var(--ivory);
+        transform: rotate(3deg);
+      }
+      .m-floral {
+        background: var(--teal);
+      }
+      .m-floral img {
+        left: 22%;
+        top: 0;
+        width: 56%;
+        height: 64%;
+        border-radius: 999px 999px 0 0;
+        border: 5px solid var(--turmeric);
+        border-bottom: 0;
+      }
+      .m-mons {
+        background: var(--indigo)
+          repeating-linear-gradient(
+            115deg,
+            transparent 0 14px,
+            rgba(244, 234, 214, 0.09) 14px 16px
+          );
+      }
+      .m-mons img {
+        left: 50%;
+        top: 10%;
+        width: 62%;
+        aspect-ratio: 1;
+        translate: -50% 0;
+        border-radius: 50%;
+        border: 3px solid var(--parchment);
+      }
+      .m-her {
+        background: var(--wine);
+      }
+      .m-her img {
+        inset: 1rem 1rem 4.6rem;
+        width: calc(100% - 2rem);
+        height: calc(100% - 5.6rem);
+        outline: 1px solid var(--turmeric);
+        outline-offset: 5px;
+      }
+      .m-sun {
+        grid-column: 1/-1;
+        background: var(--marigold);
+        color: var(--ink);
+        min-height: 200px;
+      }
+      .m-sun img {
+        right: 0;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        object-position: 50% 38%;
+        clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
+      }
+      @media (min-width: 900px) {
+        .moods {
+          grid-template-columns: repeat(6, 1fr);
+          grid-auto-rows: 270px;
+        }
+        .m-bold {
+          grid-column: 1/4;
+          grid-row: 1/3;
+        }
+        .m-floral {
+          grid-column: 4/7;
+        }
+        .m-mons {
+          grid-column: 4/6;
+        }
+        .m-her {
+          grid-column: 6/7;
+        }
+        .m-sun {
+          grid-column: 1/-1;
+          grid-row: 3;
+        }
+      }
+      @media (min-width: 900px) {
+        .m-her h3 {
+          font-size: 1.7rem;
+        }
+      }
+
+      /* ===== Featured ===== */
+      .feat {
+        background: var(--parchment) var(--grain);
+        border-block: 1.5px solid var(--ink);
+        position: relative;
+      }
+      .grid {
+        display: grid;
+        gap: 1.4rem 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.4rem 1.6rem;
+        }
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .card .ph {
+        position: relative;
+        aspect-ratio: 4/5;
+        overflow: hidden;
+        padding: 0.6rem;
+        background: var(--c, var(--ivory));
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+        box-shadow: 4px 4px 0 rgba(43, 32, 27, 0.2);
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s;
+      }
+      .card .ph img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .card:hover .ph {
+        transform: translateY(-3px);
+        box-shadow: 6px 8px 0 rgba(43, 32, 27, 0.28);
+      }
+      .card:hover .ph img {
+        transform: scale(1.045);
+      }
+      .card .badge {
+        position: absolute;
+        left: 0.9rem;
+        top: 0.9rem;
+        z-index: 2;
+      }
+      .wish {
+        position: absolute;
+        right: 0.9rem;
+        top: 0.9rem;
+        z-index: 2;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1.5px solid var(--ink);
+        background: var(--ivory);
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+      .wish svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 1.6;
+        transition: fill 0.2s;
+      }
+      .wish[aria-pressed="true"] svg {
+        fill: var(--vermilion);
+        stroke: var(--vermilion);
+      }
+      .meta {
+        padding: 1rem 0.2rem 0;
+        display: grid;
+        gap: 0.25rem;
+      }
+      .meta h3 {
+        font-size: 1.65rem;
+      }
+      .meta p {
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+      }
+      .meta a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+      .meta a,
+      .meta a:hover,
+      .meta a:focus {
+        text-decoration: none;
+      }
+      .meta a h3 {
+        color: var(--wine);
+      }
+      .meta a p {
+        color: var(--ink-soft);
+      }
+      .buy {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.6rem;
+        gap: 0.5rem;
+      }
+      .price {
+        font: 600 1.35rem var(--f-display);
+      }
+
+      /* ===== Collection preview (horizontal) ===== */
+      .coll {
+        position: relative;
+        padding: 6.5rem 0 4rem;
+        background: var(--indigo);
+        color: var(--ivory);
+        margin-top: 5rem;
+        overflow: visible;
+      }
+      .coll .mandala {
+        position: absolute;
+        top: -95px;
+        right: 6%;
+        width: 190px;
+        height: 190px;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .mandala {
+        border-radius: 50%;
+        background:
+          radial-gradient(
+            circle,
+            var(--vermilion) 0 12%,
+            var(--ivory) 13% 16%,
+            transparent 17%
+          ),
+          repeating-conic-gradient(
+            var(--marigold) 0 8deg,
+            var(--turmeric) 8deg 15deg,
+            transparent 15deg 30deg
+          );
+        -webkit-mask: radial-gradient(circle, #000 0 66%, transparent 67%);
+        mask: radial-gradient(circle, #000 0 66%, transparent 67%);
+      }
+      .coll .sec-head {
+        padding: 0 var(--pad);
+        max-width: 1440px;
+        margin: 0 auto 2rem;
+      }
+      .coll h2 {
+        color: var(--parchment);
+      }
+      .coll .sec-head p {
+        color: var(--parchment);
+      }
+      .rail {
+        display: flex;
+        gap: 1.2rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 0.5rem var(--pad) 2rem;
+        scrollbar-width: thin;
+        scrollbar-color: var(--turmeric) transparent;
+      }
+      .slide {
+        flex: 0 0 min(78vw, 400px);
+        scroll-snap-align: start;
+        text-decoration: none;
+        position: relative;
+      }
+      .slide .im {
+        aspect-ratio: 3/4;
+        overflow: hidden;
+        border: 1.5px solid var(--parchment);
+        border-radius: 999px 999px 0 0;
+        padding: 0.5rem;
+        background: var(--ivory);
+      }
+      .slide:nth-child(even) .im {
+        border-radius: 0;
+      }
+      .slide:nth-child(even) {
+        margin-top: 2.2rem;
+      }
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: inherit;
+        transition: transform 0.7s;
+      }
+      .slide:hover img {
+        transform: scale(1.05);
+      }
+      .slide h3 {
+        font-size: 2rem;
+        margin-top: 1rem;
+        color: var(--parchment);
+      }
+      .slide span {
+        font-size: 0.7rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        color: var(--turmeric);
+      }
+      .rail-ctl {
+        display: none;
+        gap: 0.6rem;
+      }
+      @media (min-width: 900px) {
+        .rail-ctl {
+          display: flex;
+        }
+      }
+      .rail-ctl button {
+        width: 46px;
+        height: 46px;
+        border: 1.5px solid var(--parchment);
+        background: none;
+        color: var(--parchment);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .rail-ctl button:hover {
+        background: var(--parchment);
+        color: var(--indigo);
+      }
+
+      /* ===== Final CTA ===== */
+      .final {
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        background: var(--terracotta) var(--grain);
+        color: var(--ivory);
+        padding: 7rem var(--pad);
+        isolation: isolate;
+      }
+      .final .mandala {
+        position: absolute;
+        z-index: -1;
+        left: 50%;
+        top: 50%;
+        width: min(140vw, 980px);
+        aspect-ratio: 1;
+        translate: -50% -50%;
+        opacity: 0.28;
+        -webkit-mask: radial-gradient(circle, #000 0 66%, transparent 67%);
+      }
+      .final h2 {
+        font-size: clamp(2.8rem, 9vw, 7rem);
+        text-transform: uppercase;
+        max-width: 14ch;
+        margin: 0 auto 2.2rem;
+      }
+      .final .btn {
+        background: var(--ivory);
+        color: var(--ink);
+      }
+
+      /* ===== Footer ===== */
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 0 var(--pad) 2rem;
+      }
+      footer .rule {
+        margin: 0 calc(-1 * var(--pad));
+        padding-block: 0;
+        position: relative;
+        top: -5px;
+      }
+      .foot {
+        max-width: 1440px;
+        margin: auto;
+        display: grid;
+        gap: 2.5rem;
+        padding: 3.5rem 0 2rem;
+        border: 0;
+      }
+      @media (min-width: 900px) {
+        .foot {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .foot h4 {
+        font: 500 0.7rem var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        color: var(--turmeric);
+        margin-bottom: 1rem;
+      }
+      .foot ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+      }
+      .foot a {
+        text-decoration: none;
+        opacity: 0.9;
+      }
+      .foot a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      h3 {
+        font-size: 2.1rem;
+        color: var(--ivory);
+        margin-bottom: 0.6rem;
+      }
+      .copy {
+        max-width: 1440px;
+        margin: auto;
+        font-size: 0.78rem;
+        opacity: 0.7;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1.2rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+
+    <header class="site-head" id="head">
+      <div class="nav">
+        <a class="logo" href="#top" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul class="links" id="links">
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="tools">
+          <button class="ic" aria-label="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 5 5" />
+            </svg>
+          </button>
+          <button class="ic" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+              /></svg
+            ><i id="wc" data-n="0"></i>
+          </button>
+          <button class="ic" aria-label="Cart">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
+            ><i id="cc" data-n="0"></i>
+          </button>
+          <button
+            class="ic burger"
+            id="burger"
+            aria-expanded="false"
+            aria-controls="links"
+            aria-label="Menu"
+          >
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="h1">
+        <div>
+          <span class="eyebrow">Contemporary Indian earrings</span>
+          <h1 id="h1">Wear a little <span>art.</span></h1>
+          <p>
+            Hand-painted earrings inspired by color, craft and the everyday
+            poetry of India.
+          </p>
+          <div class="ctas">
+            <a class="btn" href="#collection">Explore the collection</a
+            ><a class="btn alt" href="about.html">About Us</a>
+          </div>
+        </div>
+        <div
+          class="collage"
+          aria-label="A composition of hand-painted earrings"
+        >
+          <figure class="pic p1">
+            <img
+              src="images/SURYA KALASH.png"
+              alt="Red and turmeric mandala earrings with brass drops, hung on a stand before green leaves"
+            />
+            <figcaption>Surya Kalash</figcaption>
+          </figure>
+          <figure class="pic p2">
+            <img
+              src="images/PAINTED SUNSHINE.png"
+              alt="Teal sunflower earring worn against warm skin"
+              style="object-position: 30% 50%"
+            />
+            <figcaption>Painted Sunshine</figcaption>
+          </figure>
+          <figure class="pic p3">
+            <img
+              src="images/SANJH KAMLA.png"
+              alt="White lotus earrings on indigo, resting on an open book"
+            />
+            <figcaption>Sanjh Kamla</figcaption>
+          </figure>
+          <span class="sprig" aria-hidden="true"></span>
+          <span class="label hand">Made by hand</span>
+        </div>
+      </section>
+
+      <div class="rule" aria-hidden="true"></div>
+
+      <section class="sec" id="moods" aria-labelledby="mood-h">
+        <div class="sec-head">
+          <h2 id="mood-h">Shop the mood</h2>
+          <p>Start with how you feel. The colour will find you.</p>
+        </div>
+        <div class="moods">
+          <a class="mood m-bold" href="#collection"
+            ><img
+              src="images/SURYA KALASH.png"
+              alt=""
+              style="object-position: 50% 40%"
+            />
+            <div>
+              <h3>The bold<br />ones</h3>
+              <small>Block-print reds &amp; brass</small>
+            </div></a
+          >
+          <a class="mood m-floral" href="#collection"
+            ><img
+              src="images/KALAMKARI BLOOM.png"
+              alt=""
+              style="object-position: 50% 45%"
+            />
+            <div>
+              <h3>Floral<br />stories</h3>
+              <small>Kalamkari-inspired</small>
+            </div></a
+          >
+          <a class="mood m-mons" href="#collection"
+            ><img
+              src="images/SANJH KAMLA.png"
+              alt=""
+              style="object-position: 50% 35%"
+            />
+            <div>
+              <h3>Monsoon<br />colours</h3>
+              <small>Indigo &amp; lotus</small>
+            </div></a
+          >
+          <a class="mood m-her" href="#collection"
+            ><img
+              src="images/DHRUV PHOOL.png"
+              alt=""
+              style="object-position: 50% 40%"
+            />
+            <h3>Heritage<small>Ink &amp; ivory</small></h3></a
+          >
+          <a class="mood m-sun" href="#collection"
+            ><img src="images/PAINTED SUNSHINE 1.png" alt="" />
+            <div>
+              <h3>Sunny days</h3>
+              <small>Painted sunflowers</small>
+            </div></a
+          >
+        </div>
+      </section>
+
+      <section class="feat" id="collection" aria-labelledby="feat-h">
+        <div class="sec">
+          <div class="sec-head">
+            <div>
+              <span class="eyebrow">New from the studio</span>
+              <h2 id="feat-h">From the Artshaala</h2>
+            </div>
+            <p>Little pieces of colour, painted by hand.</p>
+          </div>
+          <div class="grid">
+            <article class="card" style="--c: #ecc9a2">
+              <div class="ph">
+                <span class="badge">Bestseller</span
+                ><button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Surya Kalash to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a
+                  href="product.html?id=surya-kalash"
+                  aria-label="View Surya Kalash"
+                  ><img
+                    src="images/SURYA KALASH.png"
+                    alt="Surya Kalash earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=surya-kalash">
+                  <h3>Surya Kalash</h3>
+                  <p>Vermilion sun mandalas with antique brass drops.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹849</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+            <article class="card" style="--c: #bfd9d0">
+              <div class="ph">
+                <button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Kalamkari Bloom to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a
+                  href="product.html?id=kalamkari-bloom"
+                  aria-label="View Kalamkari Bloom"
+                  ><img
+                    src="images/KALAMKARI BLOOM.png"
+                    alt="Kalamkari Bloom earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=kalamkari-bloom">
+                  <h3>Kalamkari Bloom</h3>
+                  <p>Turquoise peonies outlined in gold, with glass beads.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹699</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+            <article class="card" style="--c: #c9b9d8">
+              <div class="ph">
+                <span class="badge">New</span
+                ><button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Crescent Mahira to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a
+                  href="product.html?id=crescent-mahira"
+                  aria-label="View Crescent Mahira"
+                  ><img
+                    src="images/CRESENT MAHIRA.png"
+                    alt="Crescent Mahira earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=crescent-mahira">
+                  <h3>Crescent Mahira</h3>
+                  <p>Lilac dot-work half moons over oxidised silver.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹749</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+            <article class="card" style="--c: #dcc8a0">
+              <div class="ph">
+                <button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Kohl Muse to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a href="product.html?id=kohl-muse" aria-label="View Kohl Muse"
+                  ><img
+                    src="images/KOHL MUSE.png"
+                    alt="Kohl Muse earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=kohl-muse">
+                  <h3>Kohl Muse</h3>
+                  <p>Hexagons in kohl black, block-printed in ivory.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹599</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+            <article class="card" style="--c: #e9c470">
+              <div class="ph">
+                <span class="badge">Limited</span
+                ><button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Painted Sunshine to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a
+                  href="product.html?id=painted-sunshine"
+                  aria-label="View Painted Sunshine"
+                  ><img
+                    src="images/PAINTED SUNSHINE 1.png"
+                    alt="Painted Sunshine earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=painted-sunshine">
+                  <h3>Painted Sunshine</h3>
+                  <p>Sunflowers on a wash of periwinkle, with jhumka drops.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹649</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+            <article class="card" style="--c: #d9b2a4">
+              <div class="ph">
+                <button
+                  class="wish"
+                  aria-pressed="false"
+                  aria-label="Save Black Lotus to wishlist"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+                    />
+                  </svg></button
+                ><a
+                  href="product.html?id=black-lotus"
+                  aria-label="View Black Lotus"
+                  ><img
+                    src="images/BLACK LOTUS.png"
+                    alt="Black Lotus earrings"
+                    loading="lazy"
+                /></a>
+              </div>
+              <div class="meta">
+                <a href="product.html?id=black-lotus">
+                  <h3>Black Lotus</h3>
+                  <p>Ink-black arches with pearl fringe and silver filigree.</p>
+                </a>
+                <div class="buy">
+                  <span class="price">₹899</span
+                  ><button class="btn sm add">Quick add</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="coll" aria-labelledby="coll-h">
+        <span class="mandala" aria-hidden="true"></span>
+        <div class="sec-head">
+          <h2 id="coll-h">Collection preview</h2>
+          <div class="rail-ctl">
+            <button aria-label="Previous" data-dir="-1">&larr;</button
+            ><button aria-label="Next" data-dir="1">&rarr;</button>
+          </div>
+        </div>
+        <div
+          class="rail"
+          id="rail"
+          tabindex="0"
+          role="region"
+          aria-label="Collections, scroll horizontally"
+        >
+          <a class="slide" href="#collection"
+            ><div class="im">
+              <img src="images/KALAMKARI BLOOM.png" alt="" loading="lazy" />
+            </div>
+            <h3>Floral</h3>
+            <span>Gardens in gold outline</span></a
+          >
+          <a class="slide" href="#collection"
+            ><div class="im">
+              <img src="images/CRESENT MAHIRA.png" alt="" loading="lazy" />
+            </div>
+            <h3>Heritage</h3>
+            <span>Silver, pearl &amp; dot-work</span></a
+          >
+          <a class="slide" href="#collection"
+            ><div class="im">
+              <img src="images/SURYA KALASH.png" alt="" loading="lazy" />
+            </div>
+            <h3>Bold &amp; bright</h3>
+            <span>Sindoor red, turmeric</span></a
+          >
+          <a class="slide" href="#collection"
+            ><div class="im">
+              <img src="images/DHRUV PHOOL.png" alt="" loading="lazy" />
+            </div>
+            <h3>Ink &amp; ivory</h3>
+            <span>Block-print in monochrome</span></a
+          >
+          <a class="slide" href="#collection"
+            ><div class="im">
+              <img
+                src="images/PAINTED SUNSHINE.png"
+                alt=""
+                loading="lazy"
+                style="object-position: 35% 50%"
+              />
+            </div>
+            <h3>Sunny days</h3>
+            <span>Worn in warm light</span></a
+          >
+        </div>
+      </section>
+
+      <section class="final" aria-labelledby="fin-h" id="makers">
+        <span class="mandala" aria-hidden="true"></span>
+        <h2 id="fin-h">Find something that feels like you.</h2>
+        <a class="btn" href="shop.html">Explore all earrings</a>
+      </section>
+    </main>
+
+    <footer id="about">
+      <div class="rule" aria-hidden="true"></div>
+      <div class="foot">
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All earrings</a></li>
+            <li><a href="collections.html">By mood</a></li>
+            <li><a href="shop.html?sort=newest">New arrivals</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+            <li><a href="#about">The story</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#about">Shipping</a></li>
+            <li><a href="#about">Returns</a></li>
+            <li><a href="#about">Care guide</a></li>
+            <li><a href="#about">Contact</a></li>
+          </ul>
+        </div>
+        <div id="journal">
+          <h4>Social</h4>
+          <ul>
+            <li>
+              <a
+                href="https://www.instagram.com/_.artshaala._?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+                rel="noopener"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a href="https://www.pinterest.com/" rel="noopener">Pinterest</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="copy">
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s, r = document) => r.querySelector(s),
+          $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const head = $("#head"),
+          burger = $("#burger");
+        burger.addEventListener("click", () => {
+          const o = head.classList.toggle("open");
+          burger.setAttribute("aria-expanded", o);
+        });
+        $$("#links a").forEach((a) =>
+          a.addEventListener("click", () => {
+            head.classList.remove("open");
+            burger.setAttribute("aria-expanded", false);
+          }),
+        );
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            head.classList.remove("open");
+            burger.setAttribute("aria-expanded", false);
+          }
+        });
+
+        const set = (el, n) => {
+          el.dataset.n = n;
+          el.textContent = n || "";
+        };
+        $$(".wish").forEach((b) =>
+          b.addEventListener("click", () => {
+            const on = b.getAttribute("aria-pressed") !== "true";
+            b.setAttribute("aria-pressed", on);
+            set($("#wc"), $$(".wish[aria-pressed=true]").length);
+          }),
+        );
+        let cart = 0;
+        $$(".add").forEach((b) =>
+          b.addEventListener("click", () => {
+            set($("#cc"), ++cart);
+            const t = b.textContent;
+            b.textContent = "Added";
+            setTimeout(() => (b.textContent = t), 1400);
+          }),
+        );
+
+        const rail = $("#rail");
+        $$(".rail-ctl button").forEach((b) =>
+          b.addEventListener("click", () =>
+            rail.scrollBy({
+              left: b.dataset.dir * Math.min(420, rail.clientWidth * 0.8),
+              behavior: "smooth",
+            }),
+          ),
+        );
+      })();
+    </script>
+  </body>
+</html>

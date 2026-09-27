@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Shop — Artshaala</title>
+    <meta
+      name="description"
+      content="A collection of hand-painted earrings, shaped by colour, craft and the everyday poetry of India."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --paper-deep: #dcc8a0;
+        --ink: #2b201b;
+        --ink-soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --turmeric: #d8a01c;
+        --marigold: #df7a1c;
+        --teal: #1d6b6c;
+        --indigo: #29397a;
+        --terracotta: #a4502f;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --f-display: "Cormorant Garamond", "Rozha One", Georgia, serif;
+        --f-body: "Jost", system-ui, sans-serif;
+        --f-hand: "Kalam", "Segoe Script", cursive;
+        --track: 0.22em;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+        --chain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpath d='M12 1l5 4-5 4-5-4z' fill='none' stroke='%23a5832f' stroke-width='1.2'/%3E%3Ccircle cx='0' cy='5' r='1.2' fill='%23a5832f'/%3E%3Ccircle cx='24' cy='5' r='1.2' fill='%23a5832f'/%3E%3C/svg%3E");
+        --caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%232b201b' stroke-width='1.5'/%3E%3C/svg%3E");
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font: 400 1rem/1.6 var(--f-body);
+        color: var(--ink);
+        background: var(--ivory) var(--grain);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--f-display);
+        font-weight: 600;
+        line-height: 1.02;
+      }
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      .rule {
+        height: 10px;
+        background: var(--chain) repeat-x center;
+      }
+      .btn {
+        display: inline-block;
+        font: 500 0.74rem/1 var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--ink);
+      }
+      .btn.sm {
+        padding: 0.75rem 1rem;
+        font-size: 0.66rem;
+        box-shadow: 2px 2px 0 var(--ink);
+      }
+      .badge {
+        display: inline-block;
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.6rem;
+        background: var(--turmeric);
+        color: var(--ink);
+        border: 1px solid var(--ink);
+      }
+
+      /* Header */
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--ivory) var(--grain);
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .site-head::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -11px;
+        height: 10px;
+        background: var(--chain) repeat-x center;
+        pointer-events: none;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font: 700 1.7rem/1 var(--f-display);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .links {
+        display: none;
+        gap: 2rem;
+        list-style: none;
+        padding: 0;
+      }
+      .links a {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+        background: linear-gradient(var(--vermilion), var(--vermilion)) 0 100%/0
+          2px no-repeat;
+        transition: background-size 0.25s;
+      }
+      .links a:hover,
+      .links a[aria-current] {
+        background-size: 100% 2px;
+      }
+      .tools {
+        display: flex;
+        gap: 0.2rem;
+      }
+      .ic {
+        position: relative;
+        background: none;
+        border: 0;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .ic svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+      }
+      .ic i {
+        position: absolute;
+        top: 4px;
+        right: 2px;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font: 500 0.62rem/17px var(--f-body);
+        text-align: center;
+        font-style: normal;
+      }
+      .ic i[data-n="0"],
+      .ic i:empty {
+        display: none;
+      }
+      .burger {
+        display: grid;
+      }
+      .site-head.open .links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: var(--ivory) var(--grain);
+        padding: 1.2rem var(--pad) 1.6rem;
+        border-bottom: 1.5px solid var(--ink);
+      }
+      @media (min-width: 900px) {
+        .links {
+          display: flex;
+        }
+        .burger {
+          display: none;
+        }
+      }
+
+      /* Shop hero */
+      .shop-hero {
+        max-width: 1440px;
+        margin: auto;
+        padding: 3.5rem var(--pad) 2.5rem;
+      }
+      .shop-hero h1 {
+        font-size: clamp(3rem, 9vw, 5.6rem);
+        color: var(--wine);
+        margin: 0.6rem 0 1rem;
+      }
+      .shop-hero p {
+        max-width: 34rem;
+        font-size: 1.1rem;
+        color: var(--ink-soft);
+      }
+
+      /* Controls */
+      .controls {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 var(--pad);
+      }
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem 2rem;
+        padding: 1rem 0;
+        border-block: 1.5px solid var(--ink);
+      }
+      .bar h2 {
+        font-size: 1.9rem;
+        color: var(--wine);
+      }
+      .bar h2 span {
+        font: 500 0.8rem var(--f-body);
+        letter-spacing: 0.14em;
+        color: var(--ink-soft);
+        margin-left: 0.5rem;
+      }
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .filters label {
+        display: grid;
+        gap: 0.25rem;
+        font-size: 0.62rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .filters select {
+        appearance: none;
+        font: 400 0.9rem var(--f-body);
+        color: var(--ink);
+        background: var(--parchment) var(--grain) var(--caret) no-repeat right
+          0.8rem center;
+        border: 1.5px solid var(--ink);
+        padding: 0.6rem 2.2rem 0.6rem 0.8rem;
+        min-width: 10.5rem;
+        cursor: pointer;
+      }
+
+      /* Product cards (same as index.html) */
+      .sec {
+        max-width: 1440px;
+        margin: auto;
+        padding: 2.5rem var(--pad) 5rem;
+      }
+      .grid {
+        display: grid;
+        gap: 1.4rem 1rem;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (max-width: 480px) {
+        .grid {
+          gap: 1.2rem 0.7rem;
+        }
+        .meta h3 {
+          font-size: 1.35rem;
+        }
+        .meta p {
+          font-size: 0.85rem;
+        }
+        .buy {
+          flex-wrap: wrap;
+        }
+      }
+      @media (min-width: 700px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem 1.4rem;
+        }
+      }
+      @media (min-width: 1000px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.4rem 1.6rem;
+        }
+      }
+      .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .card .ph {
+        position: relative;
+        aspect-ratio: 4/5;
+        overflow: hidden;
+        padding: 0.6rem;
+        background: var(--c, var(--ivory));
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+        box-shadow: 4px 4px 0 rgba(43, 32, 27, 0.2);
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s;
+      }
+      .card .ph img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      .card:hover .ph {
+        transform: translateY(-3px);
+        box-shadow: 6px 8px 0 rgba(43, 32, 27, 0.28);
+      }
+      .card:hover .ph img {
+        transform: scale(1.03);
+      }
+      .card .badge {
+        position: absolute;
+        left: 0.9rem;
+        top: 0.9rem;
+        z-index: 2;
+      }
+      .wish {
+        position: absolute;
+        right: 0.9rem;
+        top: 0.9rem;
+        z-index: 2;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1.5px solid var(--ink);
+        background: var(--ivory);
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+      .wish svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 1.6;
+        transition: fill 0.2s;
+      }
+      .wish[aria-pressed="true"] svg {
+        fill: var(--vermilion);
+        stroke: var(--vermilion);
+      }
+      .meta {
+        padding: 1rem 0.2rem 0;
+        display: grid;
+        gap: 0.25rem;
+      }
+      .meta h3 {
+        font-size: 1.65rem;
+      }
+      .meta p {
+        font-size: 0.92rem;
+        color: var(--ink-soft);
+      }
+      .meta > a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .meta > a:hover {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .meta > a h3 {
+        color: var(--wine);
+      }
+      .buy {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.6rem;
+        gap: 0.5rem;
+      }
+      .price {
+        font: 600 1.35rem var(--f-display);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 0 var(--pad) 2rem;
+      }
+      footer .rule {
+        margin: 0 calc(-1 * var(--pad));
+        position: relative;
+        top: -5px;
+      }
+      .foot {
+        max-width: 1440px;
+        margin: auto;
+        display: grid;
+        gap: 2.5rem;
+        padding: 3.5rem 0 2rem;
+      }
+      @media (min-width: 900px) {
+        .foot {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .foot h4 {
+        font: 500 0.7rem var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        color: var(--turmeric);
+        margin-bottom: 1rem;
+      }
+      .foot ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+      }
+      .foot a {
+        text-decoration: none;
+        opacity: 0.9;
+      }
+      .foot a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .copy {
+        max-width: 1440px;
+        margin: auto;
+        font-size: 0.78rem;
+        opacity: 0.7;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1.2rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+
+    <header class="site-head" id="head">
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul class="links" id="links">
+            <li><a href="shop.html" aria-current="page">Shop</a></li>
+            <li><a href="collections.html">Collections</a></li>
+            <li><a href="about.html">About</a></li>
+          </ul>
+        </nav>
+        <div class="tools">
+          <button class="ic" aria-label="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 5 5" />
+            </svg>
+          </button>
+          <button class="ic" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+              /></svg
+            ><i id="wc" data-n="0"></i>
+          </button>
+          <button class="ic" aria-label="Cart">
+            <svg viewBox="0 0 24 24">
+              <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
+            ><i id="cc" data-n="0"></i>
+          </button>
+          <button
+            class="ic burger"
+            id="burger"
+            aria-expanded="false"
+            aria-controls="links"
+            aria-label="Menu"
+          >
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="shop-hero" aria-labelledby="h1">
+        <span class="eyebrow">The Art Shaala</span>
+        <h1 id="h1">The Shop</h1>
+        <p>
+          A collection of hand-painted earrings, shaped by colour, craft and the
+          everyday poetry of India.
+        </p>
+      </section>
+
+      <div class="controls">
+        <div class="bar">
+          <h2 id="count-h">
+            All Earrings<span id="count" aria-live="polite"></span>
+          </h2>
+          <div class="filters">
+            <label
+              >Mood<select id="mood">
+                <option value="all">All moods</option>
+                <option value="bold">The bold ones</option>
+                <option value="floral">Floral stories</option>
+                <option value="monsoon">Monsoon colours</option>
+                <option value="heritage">Heritage</option>
+                <option value="sunny">Sunny days</option>
+              </select></label
+            >
+            <label
+              >Sort by<select id="sort">
+                <option value="featured">Featured</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="newest">Newest</option>
+              </select></label
+            >
+          </div>
+        </div>
+      </div>
+
+      <section class="sec" aria-labelledby="count-h">
+        <div class="grid" id="grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="foot">
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All earrings</a></li>
+            <li><a href="collections.html">By mood</a></li>
+            <li><a href="shop.html?sort=newest">New arrivals</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+            <li><a href="about.html">The story</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <ul>
+            <li><a href="shipping.html">Shipping</a></li>
+            <li><a href="returns.html">Returns</a></li>
+            <li><a href="care-guide.html">Care guide</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Social</h4>
+          <ul>
+            <li>
+              <a
+                href="https://www.instagram.com/_.artshaala._?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+                rel="noopener"
+                >Instagram</a
+              >
+            </li>
+            <li>
+              <a href="https://www.pinterest.com/" rel="noopener">Pinterest</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="copy">
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s, r = document) => r.querySelector(s),
+          $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        /* n = release order (higher is newer); mood = filter group; c = card background */
+        const P = [
+          {
+            id: "surya-kalash",
+            name: "Surya Kalash",
+            price: 849,
+            badge: "Bestseller",
+            mood: "bold",
+            n: 6,
+            c: "#ecc9a2",
+            img: "images/SURYA KALASH.png",
+            alt: "Surya Kalash earrings: red and yellow sun mandalas with brass drops on a stand",
+            d: "Vermilion sun mandalas with antique brass drops.",
+          },
+          {
+            id: "kalamkari-bloom",
+            name: "Kalamkari Bloom",
+            price: 699,
+            mood: "floral",
+            n: 5,
+            c: "#bfd9d0",
+            img: "images/KALAMKARI BLOOM.png",
+            alt: "Kalamkari Bloom earrings: turquoise peonies outlined in gold with blue glass beads",
+            d: "Turquoise peonies outlined in gold, with glass beads.",
+          },
+          {
+            id: "crescent-mahira",
+            name: "Crescent Mahira",
+            price: 749,
+            badge: "New",
+            mood: "heritage",
+            n: 9,
+            c: "#c9b9d8",
+            img: "images/CRESENT MAHIRA.png",
+            alt: "Crescent Mahira earrings: lilac dot-work half moons with silver and lilac beads on an open book",
+            d: "Lilac dot-work half moons over oxidised silver.",
+          },
+          {
+            id: "kohl-muse",
+            name: "Kohl Muse",
+            price: 599,
+            mood: "heritage",
+            n: 4,
+            c: "#dcc8a0",
+            img: "images/KOHL MUSE.png",
+            alt: "Kohl Muse earrings: black hexagons with ivory block-print and silver bells",
+            d: "Hexagons in kohl black, block-printed in ivory.",
+          },
+          {
+            id: "painted-sunshine",
+            name: "Painted Sunshine",
+            price: 649,
+            badge: "Limited",
+            mood: "sunny",
+            n: 3,
+            c: "#e9c470",
+            img: "images/PAINTED SUNSHINE 1.png",
+            alt: "Painted Sunshine earrings: yellow sunflowers on periwinkle discs with jhumka drops",
+            d: "Sunflowers on a wash of periwinkle, with jhumka drops.",
+          },
+          {
+            id: "black-lotus",
+            name: "Black Lotus",
+            price: 899,
+            mood: "heritage",
+            n: 2,
+            c: "#d9b2a4",
+            img: "images/BLACK LOTUS.png",
+            alt: "Black Lotus earrings: black half moons with ivory dots and silver pearl-fringed crescents",
+            d: "Ink-black arches with pearl fringe and silver filigree.",
+          },
+          {
+            id: "dhruv-phool",
+            name: "Dhruv Phool",
+            price: 799,
+            mood: "heritage",
+            n: 8,
+            c: "#dcc8a0",
+            img: "images/DHRUV PHOOL.png",
+            alt: "Dhruv Phool earrings: black and ivory mandala discs and half moons with silver ghungroo",
+            d: "Ivory mandalas on kohl black, with silver ghungroo.",
+          },
+          {
+            id: "sanjh-kamla",
+            name: "Sanjh Kamla",
+            price: 649,
+            mood: "monsoon",
+            n: 7,
+            c: "#c3cae0",
+            img: "images/SANJH KAMLA.png",
+            alt: "Sanjh Kamla earrings: white lotus on deep indigo discs with silver flower charms",
+            d: "White lotus on deep indigo, with silver flower charms.",
+          },
+          {
+            id: "sunrise-petal",
+            name: "Sunrise Petal",
+            price: 749,
+            mood: "sunny",
+            n: 1,
+            c: "#e6c9a6",
+            img: "images/PAINTED SUNSHINE.png",
+            alt: "Sunrise Petal earring: a teal disc with a rising marigold sun and jhumka drop, worn on the ear",
+            d: "A marigold sun rising over peacock teal, with a jhumka drop.",
+          },
+        ];
+        const heart =
+          '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg>';
+        const wished = new Set();
+        let cart = 0;
+        const grid = $("#grid"),
+          mood = $("#mood"),
+          sort = $("#sort");
+        const setN = (el, n) => {
+          el.dataset.n = n;
+          el.textContent = n || "";
+        };
+
+        const render = () => {
+          let list = P.filter(
+            (p) => mood.value === "all" || p.mood === mood.value,
+          );
+          const s = sort.value;
+          if (s === "low") list.sort((a, b) => a.price - b.price);
+          if (s === "high") list.sort((a, b) => b.price - a.price);
+          if (s === "newest") list.sort((a, b) => b.n - a.n);
+          grid.innerHTML = list
+            .map(
+              (p) => `
+<article class="card" style="--c:${p.c}">
+<div class="ph">${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+<button class="wish" data-id="${p.id}" aria-pressed="${wished.has(p.id)}" aria-label="Save ${p.name} to wishlist">${heart}</button>
+<a href="product.html?id=${p.id}" aria-label="View ${p.name}"><img src="${p.img}" alt="${p.alt}" loading="lazy"></a></div>
+<div class="meta"><a href="product.html?id=${p.id}"><h3>${p.name}</h3><p>${p.d}</p></a>
+<div class="buy"><span class="price">₹${p.price}</span><button class="btn sm add" data-name="${p.name}" aria-label="Quick add ${p.name} to cart">Quick add</button></div></div>
+</article>`,
+            )
+            .join("");
+          $("#count").textContent =
+            `${list.length} ${list.length === 1 ? "piece" : "pieces"}`;
+        };
+
+        grid.addEventListener("click", (e) => {
+          const w = e.target.closest(".wish"),
+            a = e.target.closest(".add");
+          if (w) {
+            const on = w.getAttribute("aria-pressed") !== "true";
+            w.setAttribute("aria-pressed", on);
+            on ? wished.add(w.dataset.id) : wished.delete(w.dataset.id);
+            setN($("#wc"), wished.size);
+          }
+          if (a && !a.disabled) {
+            setN($("#cc"), ++cart);
+            a.textContent = "Added";
+            a.disabled = true;
+            setTimeout(() => {
+              a.textContent = "Quick add";
+              a.disabled = false;
+            }, 1400);
+          }
+        });
+        mood.addEventListener("change", render);
+        sort.addEventListener("change", render);
+        const q = new URLSearchParams(location.search).get("sort");
+        if ([...sort.options].some((o) => o.value === q)) sort.value = q;
+        render();
+
+        const head = $("#head"),
+          burger = $("#burger");
+        const closeMenu = () => {
+          head.classList.remove("open");
+          burger.setAttribute("aria-expanded", false);
+        };
+        burger.addEventListener("click", () =>
+          burger.setAttribute("aria-expanded", head.classList.toggle("open")),
+        );
+        $$("#links a").forEach((a) => a.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeMenu();
+        });
+      })();
+    </script>
+  </body>
+</html>
