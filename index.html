@@ -961,8 +961,8 @@
         <nav aria-label="Main">
           <ul class="links" id="links">
             <li><a href="shop.html">Shop</a></li>
-            <li><a href="collections.html">Collections</a></li>
             <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
         <div class="tools">
@@ -979,11 +979,11 @@
               /></svg
             ><i id="wc" data-n="0"></i>
           </button>
-          <button class="ic" aria-label="Cart">
+          <a class="ic" href="cart.html" aria-label="Cart">
             <svg viewBox="0 0 24 24">
               <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
             ><i id="cc" data-n="0"></i>
-          </button>
+          </a>
           <button
             class="ic burger"
             id="burger"
@@ -1381,14 +1381,14 @@
           <h4>Shop</h4>
           <ul>
             <li><a href="shop.html">All earrings</a></li>
-            <li><a href="collections.html">By mood</a></li>
             <li><a href="shop.html?sort=newest">New arrivals</a></li>
           </ul>
         </div>
         <div>
           <h4>About</h4>
           <ul>
-            <li><a href="#about">The story</a></li>
+            <li><a href="about.html">The story</a></li>
+            <li><a href="privacy-policy.html">Privacy policy</a></li>
           </ul>
         </div>
         <div>
@@ -1397,7 +1397,7 @@
             <li><a href="#about">Shipping</a></li>
             <li><a href="#about">Returns</a></li>
             <li><a href="#about">Care guide</a></li>
-            <li><a href="#about">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div id="journal">
@@ -1456,10 +1456,59 @@
             set($("#wc"), $$(".wish[aria-pressed=true]").length);
           }),
         );
-        let cart = 0;
+        /* ===== Cart (same key/shape as product.html + cart.html) ===== */
+        const CART_KEY = "artshaala-cart";
+        function readCart() {
+          let raw;
+          try {
+            raw = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+          } catch {
+            raw = [];
+          }
+          if (!Array.isArray(raw)) raw = [];
+          return raw
+            .filter(
+              (r) =>
+                r &&
+                typeof r.id === "string" &&
+                Number.isFinite(r.quantity) &&
+                r.quantity > 0,
+            )
+            .map((r) => ({ id: r.id, quantity: Math.floor(r.quantity) }));
+        }
+        function refreshCartBadge() {
+          set(
+            $("#cc"),
+            readCart().reduce((n, r) => n + r.quantity, 0),
+          );
+        }
+        function addToCart(id, qty) {
+          if (!id) return;
+          const rows = readCart();
+          const row = rows.find((r) => r.id === id);
+          if (row) row.quantity += qty;
+          else rows.push({ id, quantity: qty });
+          try {
+            localStorage.setItem(CART_KEY, JSON.stringify(rows));
+          } catch {}
+          refreshCartBadge();
+        }
+        const cardId = (btn) => {
+          const link = btn
+            .closest(".card")
+            ?.querySelector('a[href^="product.html?id="]');
+          return link
+            ? new URL(
+                link.getAttribute("href"),
+                location.href,
+              ).searchParams.get("id")
+            : null;
+        };
+        refreshCartBadge();
+        window.addEventListener("pageshow", refreshCartBadge);
         $$(".add").forEach((b) =>
           b.addEventListener("click", () => {
-            set($("#cc"), ++cart);
+            addToCart(cardId(b), 1);
             const t = b.textContent;
             b.textContent = "Added";
             setTimeout(() => (b.textContent = t), 1400);

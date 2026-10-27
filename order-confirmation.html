@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Demo order — Artshaala</title>
+    <meta
+      name="description"
+      content="Demo order summary for Artshaala. No payment was taken."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --ink: #2b201b;
+        --soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --terracotta: #a4502f;
+        --indigo: #29397a;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font:
+          400 1rem/1.6 Jost,
+          system-ui,
+          sans-serif;
+        color: var(--ink);
+        background: var(--ivory);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      h1,
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.05;
+        color: var(--wine);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin: 2rem 0 0.6rem;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 9;
+        background: var(--ivory);
+        padding: 0.5rem 1rem;
+      }
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      header {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem 1.5rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font:
+          700 1.7rem/1 "Cormorant Garamond",
+          Georgia,
+          serif;
+        text-decoration: none;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 1.4rem;
+        list-style: none;
+        padding: 0;
+      }
+      .nav ul a {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+      }
+      .nav ul a:hover,
+      .nav ul a[aria-current] {
+        text-decoration: underline;
+        text-decoration-color: var(--vermilion);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
+      }
+      .nav i {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.35rem;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font:
+          500 0.62rem/17px Jost,
+          sans-serif;
+        font-style: normal;
+        text-align: center;
+      }
+      .nav i:empty {
+        display: none;
+      }
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 2.5rem var(--pad) 5rem;
+      }
+      .eyebrow {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      p + p {
+        margin-top: 1rem;
+      }
+      .lead {
+        max-width: 36rem;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        color: var(--soft);
+      }
+      .btn {
+        display: inline-block;
+        font:
+          500 0.74rem/1 Jost,
+          sans-serif;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .note {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -6px;
+        background: var(--parchment);
+        padding: 1rem 1.2rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      .dl {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.4rem 1.2rem;
+        margin: 1.5rem 0;
+      }
+      .dl dt {
+        padding-top: 0.25rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--terracotta);
+      }
+      .dl dd {
+        overflow-wrap: anywhere;
+      }
+      .lines {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.6rem;
+        max-width: 34rem;
+      }
+      .lines li {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--parchment);
+        padding-bottom: 0.5rem;
+      }
+      .tot {
+        max-width: 34rem;
+        margin-top: 0.8rem;
+      }
+      .tr {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .tr.t {
+        border-top: 1.5px solid var(--ink);
+        margin-top: 0.5rem;
+        padding-top: 0.7rem;
+        font:
+          600 1.3rem "Cormorant Garamond",
+          Georgia,
+          serif;
+      }
+      .acts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 2.5rem var(--pad) 2rem;
+      }
+      .fl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+      }
+      .fl a {
+        text-decoration: none;
+      }
+      .fl a:hover {
+        text-decoration: underline;
+      }
+      footer p {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+    <header>
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart<i id="cc"></i></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="ok" hidden aria-labelledby="okh">
+        <span class="eyebrow">Demo order</span>
+        <h1 id="okh" tabindex="-1">Demo order recorded</h1>
+        <p class="note">
+          <strong>This was a demo.</strong> No payment was taken, no order was
+          sent to Artshaala, no confirmation email was sent and nothing will be
+          shipped.
+        </p>
+        <dl class="dl">
+          <dt>Demo reference</dt>
+          <dd id="ref"></dd>
+          <dt>Recorded</dt>
+          <dd id="when"></dd>
+          <dt>Name</dt>
+          <dd id="nm"></dd>
+          <dt>Email</dt>
+          <dd id="em"></dd>
+          <dt>Phone</dt>
+          <dd id="ph"></dd>
+          <dt>Delivery address</dt>
+          <dd id="ad"></dd>
+        </dl>
+        <h2>Items</h2>
+        <ul class="lines" id="lines"></ul>
+        <div class="tot">
+          <div class="tr"><span>Subtotal</span><span id="sub"></span></div>
+          <div class="tr"><span>Shipping</span><span id="ship"></span></div>
+          <div class="tr t">
+            <span>Total (not charged)</span><span id="tot"></span>
+          </div>
+        </div>
+        <div class="acts">
+          <a class="btn" href="shop.html">Continue shopping</a>
+          <button class="btn alt" id="clr" type="button">
+            Clear demo order
+          </button>
+        </div>
+      </section>
+
+      <section id="none" hidden aria-labelledby="nh">
+        <span class="eyebrow">Order summary</span>
+        <h1 id="nh">No order to show</h1>
+        <p class="lead">
+          There is no demo order saved in this browser. Browse the collection or
+          head back to your cart.
+        </p>
+        <div class="acts">
+          <a class="btn" href="shop.html">Go to Shop</a
+          ><a class="btn alt" href="cart.html">View cart</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <nav class="fl" aria-label="Footer">
+        <a href="shop.html">All earrings</a
+        ><a href="shop.html?sort=newest">New arrivals</a
+        ><a href="about.html">About</a><a href="contact.html">Contact</a
+        ><a href="privacy-policy.html">Privacy policy</a>
+      </nav>
+      <p>
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s) => document.querySelector(s);
+        const ORD = "artshaala-demo-order",
+          KEY = "artshaala-cart";
+        const R = (n) => "₹" + n;
+        try {
+          const c = JSON.parse(localStorage.getItem(KEY));
+          const n = Array.isArray(c)
+            ? c.reduce(
+                (s, x) =>
+                  s +
+                  (x && Number.isFinite(x.quantity) && x.quantity > 0
+                    ? Math.floor(x.quantity)
+                    : 0),
+                0,
+              )
+            : 0;
+          $("#cc").textContent = n || "";
+        } catch {}
+
+        let o = null;
+        try {
+          o = JSON.parse(localStorage.getItem(ORD));
+        } catch {}
+        const valid =
+          o &&
+          o.demo === true &&
+          o.customer &&
+          typeof o.customer === "object" &&
+          Array.isArray(o.items) &&
+          o.items.length > 0 &&
+          [o.subtotal, o.shipping, o.total].every(Number.isFinite) &&
+          o.items.every(
+            (i) =>
+              i &&
+              typeof i.name === "string" &&
+              [i.price, i.quantity, i.total].every(Number.isFinite),
+          );
+        if (!valid) {
+          $("#none").hidden = false;
+          return;
+        }
+
+        const h = (t, x) => {
+          const e = document.createElement(t);
+          e.textContent = x;
+          return e;
+        };
+        const c = o.customer,
+          d = new Date(o.placedAt);
+        $("#ref").textContent = String(o.ref || "");
+        $("#when").textContent = isNaN(d) ? "" : d.toLocaleString("en-IN");
+        $("#nm").textContent = String(c.name || "");
+        $("#em").textContent = String(c.email || "");
+        $("#ph").textContent = String(c.phone || "");
+        $("#ad").textContent = [
+          c.address1,
+          c.address2,
+          c.city,
+          c.state,
+          c.pin,
+          c.country,
+        ]
+          .filter(Boolean)
+          .join(", ");
+        const ul = $("#lines");
+        o.items.forEach((i) => {
+          const li = document.createElement("li");
+          li.append(
+            h("span", `${i.name} (${i.quantity} × ${R(i.price)})`),
+            h("span", R(i.total)),
+          );
+          ul.append(li);
+        });
+        $("#sub").textContent = R(o.subtotal);
+        $("#ship").textContent = R(o.shipping);
+        $("#tot").textContent = R(o.total);
+        $("#ok").hidden = false;
+        $("#okh").focus();
+        $("#clr").addEventListener("click", () => {
+          try {
+            localStorage.removeItem(ORD);
+          } catch {}
+          location.reload();
+        });
+      })();
+    </script>
+  </body>
+</html>

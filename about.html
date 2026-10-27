@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>About — Artshaala</title>
+    <meta
+      name="description"
+      content="Hand-painted earrings inspired by colour, craft and the everyday poetry of India."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --ink: #2b201b;
+        --soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --terracotta: #a4502f;
+        --indigo: #29397a;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font:
+          400 1rem/1.6 Jost,
+          system-ui,
+          sans-serif;
+        color: var(--ink);
+        background: var(--ivory);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      h1,
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.05;
+        color: var(--wine);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin: 2rem 0 0.6rem;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 9;
+        background: var(--ivory);
+        padding: 0.5rem 1rem;
+      }
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      header {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem 1.5rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font:
+          700 1.7rem/1 "Cormorant Garamond",
+          Georgia,
+          serif;
+        text-decoration: none;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 1.4rem;
+        list-style: none;
+        padding: 0;
+      }
+      .nav ul a {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+      }
+      .nav ul a:hover,
+      .nav ul a[aria-current] {
+        text-decoration: underline;
+        text-decoration-color: var(--vermilion);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
+      }
+      .nav i {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.35rem;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font:
+          500 0.62rem/17px Jost,
+          sans-serif;
+        font-style: normal;
+        text-align: center;
+      }
+      .nav i:empty {
+        display: none;
+      }
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 2.5rem var(--pad) 5rem;
+      }
+      .eyebrow {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      p + p {
+        margin-top: 1rem;
+      }
+      .lead {
+        max-width: 36rem;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        color: var(--soft);
+      }
+      .btn {
+        display: inline-block;
+        font:
+          500 0.74rem/1 Jost,
+          sans-serif;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .note {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -6px;
+        background: var(--parchment);
+        padding: 1rem 1.2rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      .ed {
+        display: grid;
+        gap: 1.5rem;
+        margin: 3.5rem 0;
+        align-items: center;
+      }
+      @media (min-width: 800px) {
+        .ed {
+          grid-template-columns: 1fr 1fr;
+          gap: 3.5rem;
+        }
+        .ed.r figure {
+          order: 2;
+        }
+      }
+      .ed figure img {
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: contain;
+        padding: 0.6rem;
+        background: var(--c);
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+      }
+      .ed figcaption {
+        margin-top: 0.6rem;
+        font:
+          1rem Kalam,
+          "Segoe Script",
+          cursive;
+        color: var(--soft);
+      }
+      .ed p {
+        color: var(--soft);
+        max-width: 30rem;
+      }
+      .ed .more {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 2.5rem var(--pad) 2rem;
+      }
+      .fl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+      }
+      .fl a {
+        text-decoration: none;
+      }
+      .fl a:hover {
+        text-decoration: underline;
+      }
+      footer p {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+    <header>
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html" aria-current="page">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart<i id="cc"></i></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <span class="eyebrow">The Art Shaala</span>
+      <h1>Wear a little art.</h1>
+      <p class="lead">
+        Artshaala makes hand-painted earrings inspired by colour, craft and the
+        everyday poetry of India. Every pair is painted by hand, so no two are
+        exactly alike.
+      </p>
+
+      <section class="ed" aria-labelledby="s1">
+        <figure style="--c: #ecc9a2">
+          <a href="product.html?id=surya-kalash"
+            ><img
+              src="images/SURYA KALASH.png"
+              alt="Surya Kalash earrings: red and yellow sun mandalas with brass drops on a stand"
+          /></a>
+          <figcaption>Surya Kalash</figcaption>
+        </figure>
+        <div>
+          <span class="eyebrow">Colour first</span>
+          <h2 id="s1" style="margin-top: 0">Sun, sindoor and brass</h2>
+          <p>
+            Surya Kalash is painted in vermilion and turmeric sun mandalas and
+            finished with antique brass drops. It is the boldest expression of
+            the palette that runs through the shop: strong reds, warm yellows
+            and metal that catches the light.
+          </p>
+          <a class="more" href="product.html?id=surya-kalash"
+            >View Surya Kalash</a
+          >
+        </div>
+      </section>
+
+      <section class="ed r" aria-labelledby="s2">
+        <figure style="--c: #bfd9d0">
+          <a href="product.html?id=kalamkari-bloom"
+            ><img
+              src="images/KALAMKARI BLOOM.png"
+              alt="Kalamkari Bloom earrings: turquoise peonies outlined in gold with blue glass beads"
+          /></a>
+          <figcaption>Kalamkari Bloom</figcaption>
+        </figure>
+        <div>
+          <span class="eyebrow">Garden stories</span>
+          <h2 id="s2" style="margin-top: 0">Flowers drawn in gold outline</h2>
+          <p>
+            Kalamkari Bloom is a Kalamkari-inspired garden: turquoise peonies
+            outlined in gold, painted on wood and hung with glass beads. The
+            pattern takes its cue from India's tradition of painted and printed
+            textiles, reimagined at earring scale.
+          </p>
+          <a class="more" href="product.html?id=kalamkari-bloom"
+            >View Kalamkari Bloom</a
+          >
+        </div>
+      </section>
+
+      <section aria-labelledby="s3">
+        <span class="eyebrow">Handmade individuality</span>
+        <h2 id="s3" style="margin-top: 0">No two pairs alike</h2>
+        <p class="lead" style="margin-top: 0">
+          Because each pair is painted by hand, small differences in line, dot
+          and colour are part of the piece. The range moves from kohl black and
+          ivory in Kohl Muse and Dhruv Phool, to white lotus on deep indigo in
+          Sanjh Kamla, to sunflowers on periwinkle in Painted Sunshine.
+        </p>
+        <p class="lead">
+          Each design starts from colour and everyday imagery rather than from
+          ornament for its own sake.
+        </p>
+      </section>
+
+      <aside class="note">
+        <strong>To be added:</strong> [Studio story, maker details and care
+        information &mdash; to be written by Artshaala.]
+      </aside>
+
+      <p><a class="btn" href="shop.html">Explore all earrings</a></p>
+    </main>
+
+    <footer>
+      <nav class="fl" aria-label="Footer">
+        <a href="shop.html">All earrings</a
+        ><a href="shop.html?sort=newest">New arrivals</a
+        ><a href="about.html">About</a><a href="contact.html">Contact</a
+        ><a href="privacy-policy.html">Privacy policy</a>
+      </nav>
+      <p>
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      try {
+        const c = JSON.parse(localStorage.getItem("artshaala-cart"));
+        const n = Array.isArray(c)
+          ? c.reduce(
+              (s, x) =>
+                s +
+                (x && Number.isFinite(x.quantity) && x.quantity > 0
+                  ? Math.floor(x.quantity)
+                  : 0),
+              0,
+            )
+          : 0;
+        document.getElementById("cc").textContent = n || "";
+      } catch {}
+    </script>
+  </body>
+</html>

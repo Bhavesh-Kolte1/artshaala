@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact — Artshaala</title>
+    <meta
+      name="description"
+      content="Contact Artshaala. This form is a frontend demonstration and does not send messages yet."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --ink: #2b201b;
+        --soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --terracotta: #a4502f;
+        --indigo: #29397a;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font:
+          400 1rem/1.6 Jost,
+          system-ui,
+          sans-serif;
+        color: var(--ink);
+        background: var(--ivory);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      h1,
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.05;
+        color: var(--wine);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin: 2rem 0 0.6rem;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 9;
+        background: var(--ivory);
+        padding: 0.5rem 1rem;
+      }
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      header {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem 1.5rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font:
+          700 1.7rem/1 "Cormorant Garamond",
+          Georgia,
+          serif;
+        text-decoration: none;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 1.4rem;
+        list-style: none;
+        padding: 0;
+      }
+      .nav ul a {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+      }
+      .nav ul a:hover,
+      .nav ul a[aria-current] {
+        text-decoration: underline;
+        text-decoration-color: var(--vermilion);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
+      }
+      .nav i {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.35rem;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font:
+          500 0.62rem/17px Jost,
+          sans-serif;
+        font-style: normal;
+        text-align: center;
+      }
+      .nav i:empty {
+        display: none;
+      }
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 2.5rem var(--pad) 5rem;
+      }
+      .eyebrow {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      p + p {
+        margin-top: 1rem;
+      }
+      .lead {
+        max-width: 36rem;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        color: var(--soft);
+      }
+      .btn {
+        display: inline-block;
+        font:
+          500 0.74rem/1 Jost,
+          sans-serif;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .note {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -6px;
+        background: var(--parchment);
+        padding: 1rem 1.2rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      .fg {
+        display: grid;
+        gap: 1rem;
+      }
+      .fld label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+      .fld input,
+      .fld textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--ivory);
+        border: 1.5px solid var(--ink);
+        padding: 0.7rem 0.8rem;
+      }
+      .fld [aria-invalid="true"] {
+        border-color: var(--vermilion);
+      }
+      .err {
+        display: block;
+        min-height: 1.1em;
+        color: var(--vermilion);
+        font-size: 0.85rem;
+      }
+      @media (min-width: 600px) {
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        .w {
+          grid-column: 1/-1;
+        }
+      }
+      .wrap {
+        max-width: 44rem;
+      }
+      .dl {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 0.4rem 1.2rem;
+        margin: 1rem 0;
+      }
+      .dl dt {
+        padding-top: 0.25rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--terracotta);
+      }
+      .dl dd {
+        overflow-wrap: anywhere;
+      }
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 2.5rem var(--pad) 2rem;
+      }
+      .fl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+      }
+      .fl a {
+        text-decoration: none;
+      }
+      .fl a:hover {
+        text-decoration: underline;
+      }
+      footer p {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+    <header>
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart<i id="cc"></i></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="wrap">
+        <span class="eyebrow">Get in touch</span>
+        <h1>Contact</h1>
+        <p class="note">
+          <strong>Frontend demonstration only.</strong> This form does not send,
+          email or store your message. Message delivery has not been set up yet.
+        </p>
+
+        <form id="f" novalidate aria-label="Contact form">
+          <div class="fg">
+            <div class="fld">
+              <label for="name">Name</label
+              ><input
+                id="name"
+                autocomplete="name"
+                required
+                aria-describedby="e-name"
+              /><span class="err" id="e-name"></span>
+            </div>
+            <div class="fld">
+              <label for="email">Email</label
+              ><input
+                id="email"
+                type="email"
+                autocomplete="email"
+                required
+                aria-describedby="e-email"
+              /><span class="err" id="e-email"></span>
+            </div>
+            <div class="fld w">
+              <label for="subject">Subject</label
+              ><input id="subject" required aria-describedby="e-subject" /><span
+                class="err"
+                id="e-subject"
+              ></span>
+            </div>
+            <div class="fld w">
+              <label for="message">Message</label
+              ><textarea
+                id="message"
+                rows="6"
+                required
+                aria-describedby="e-message"
+              ></textarea
+              ><span class="err" id="e-message"></span>
+            </div>
+          </div>
+          <p
+            class="err"
+            id="status"
+            role="alert"
+            style="margin-top: 0.6rem"
+          ></p>
+          <button class="btn" type="submit" style="margin-top: 0.6rem">
+            Check my message
+          </button>
+        </form>
+        <div
+          id="done"
+          role="status"
+          aria-live="polite"
+          style="margin-top: 1rem"
+        ></div>
+
+        <h2>Studio details</h2>
+        <dl class="dl">
+          <dt>Email</dt>
+          <dd>[Contact email &mdash; to be added]</dd>
+          <dt>Phone</dt>
+          <dd>[Contact phone &mdash; to be added]</dd>
+          <dt>Address</dt>
+          <dd>[Business address &mdash; to be added]</dd>
+          <dt>Hours</dt>
+          <dd>[Response hours &mdash; to be added]</dd>
+        </dl>
+      </div>
+    </main>
+
+    <footer>
+      <nav class="fl" aria-label="Footer">
+        <a href="shop.html">All earrings</a
+        ><a href="shop.html?sort=newest">New arrivals</a
+        ><a href="about.html">About</a><a href="contact.html">Contact</a
+        ><a href="privacy-policy.html">Privacy policy</a>
+      </nav>
+      <p>
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s) => document.querySelector(s);
+        try {
+          const c = JSON.parse(localStorage.getItem("artshaala-cart"));
+          const n = Array.isArray(c)
+            ? c.reduce(
+                (s, x) =>
+                  s +
+                  (x && Number.isFinite(x.quantity) && x.quantity > 0
+                    ? Math.floor(x.quantity)
+                    : 0),
+                0,
+              )
+            : 0;
+          $("#cc").textContent = n || "";
+        } catch {}
+        const rules = {
+          name: (v) => v.length > 1 || "Enter your name.",
+          email: (v) =>
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ||
+            "Enter a valid email address.",
+          subject: (v) => v.length > 2 || "Enter a subject.",
+          message: (v) =>
+            v.length > 9 || "Enter a message of at least 10 characters.",
+        };
+        $("#f").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const done = $("#done");
+          done.className = "";
+          done.textContent = "";
+          let first = null;
+          Object.entries(rules).forEach(([k, chk]) => {
+            const i = $("#" + k),
+              r = chk(i.value.trim()),
+              bad = r !== true;
+            $("#e-" + k).textContent = bad ? r : "";
+            i.setAttribute("aria-invalid", bad);
+            if (bad && !first) first = i;
+          });
+          const status = $("#status");
+          if (first) {
+            status.textContent = "Please correct the fields marked below.";
+            first.focus();
+            return;
+          }
+          status.textContent = "";
+          done.className = "note";
+          done.textContent =
+            "Your details look valid, but message delivery is not configured yet. Your message was not sent and nothing was saved.";
+        });
+      })();
+    </script>
+  </body>
+</html>

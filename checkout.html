@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Checkout (demo) — Artshaala</title>
+    <meta
+      name="description"
+      content="Demo guest checkout for Artshaala. No payment is taken."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --ink: #2b201b;
+        --soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --terracotta: #a4502f;
+        --indigo: #29397a;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        font:
+          400 1rem/1.6 Jost,
+          system-ui,
+          sans-serif;
+        color: var(--ink);
+        background: var(--ivory);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      h1,
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        line-height: 1.05;
+        color: var(--wine);
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+      }
+      h2 {
+        font-size: 1.8rem;
+        margin: 2rem 0 0.6rem;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+      }
+      .skip:focus {
+        left: 1rem;
+        top: 1rem;
+        z-index: 9;
+        background: var(--ivory);
+        padding: 0.5rem 1rem;
+      }
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      header {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem 1.5rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font:
+          700 1.7rem/1 "Cormorant Garamond",
+          Georgia,
+          serif;
+        text-decoration: none;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 1.4rem;
+        list-style: none;
+        padding: 0;
+      }
+      .nav ul a {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+      }
+      .nav ul a:hover,
+      .nav ul a[aria-current] {
+        text-decoration: underline;
+        text-decoration-color: var(--vermilion);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
+      }
+      .nav i {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 0.35rem;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font:
+          500 0.62rem/17px Jost,
+          sans-serif;
+        font-style: normal;
+        text-align: center;
+      }
+      .nav i:empty {
+        display: none;
+      }
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 2.5rem var(--pad) 5rem;
+      }
+      .eyebrow {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      p + p {
+        margin-top: 1rem;
+      }
+      .lead {
+        max-width: 36rem;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        color: var(--soft);
+      }
+      .btn {
+        display: inline-block;
+        font:
+          500 0.74rem/1 Jost,
+          sans-serif;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .note {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -6px;
+        background: var(--parchment);
+        padding: 1rem 1.2rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      .fg {
+        display: grid;
+        gap: 1rem;
+      }
+      .fld label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+      .fld input {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--ivory);
+        border: 1.5px solid var(--ink);
+        padding: 0.7rem 0.8rem;
+      }
+      .fld [aria-invalid="true"] {
+        border-color: var(--vermilion);
+      }
+      .err {
+        display: block;
+        min-height: 1.1em;
+        color: var(--vermilion);
+        font-size: 0.85rem;
+      }
+      @media (min-width: 600px) {
+        .fg {
+          grid-template-columns: 1fr 1fr;
+        }
+        .w {
+          grid-column: 1/-1;
+        }
+      }
+      .co {
+        display: grid;
+        gap: 2rem;
+        margin-top: 1.5rem;
+      }
+      @media (min-width: 900px) {
+        .co {
+          grid-template-columns: 1fr 380px;
+          align-items: start;
+        }
+      }
+      .sum {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+        background: var(--parchment);
+        padding: 1.6rem;
+      }
+      .sum ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.9rem;
+        margin: 1rem 0;
+      }
+      .sum li {
+        display: grid;
+        grid-template-columns: 56px 1fr auto;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      .sum li img {
+        width: 56px;
+        height: 70px;
+        object-fit: contain;
+        border: 1px solid var(--ink);
+        background: var(--ivory);
+      }
+      .tr {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .tr.t {
+        border-top: 1.5px solid var(--ink);
+        margin-top: 0.5rem;
+        padding-top: 0.7rem;
+        font:
+          600 1.3rem "Cormorant Garamond",
+          Georgia,
+          serif;
+      }
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 2.5rem var(--pad) 2rem;
+      }
+      .fl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.6rem;
+        font-size: 0.95rem;
+        margin-bottom: 1.2rem;
+      }
+      .fl a {
+        text-decoration: none;
+      }
+      .fl a:hover {
+        text-decoration: underline;
+      }
+      footer p {
+        font-size: 0.78rem;
+        opacity: 0.75;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+    <header>
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li>
+              <a href="cart.html">Cart<i id="cc"></i></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <span class="eyebrow">Guest checkout</span>
+      <h1>Checkout</h1>
+      <p class="note">
+        <strong>Demo only.</strong> No payment is taken, no order is sent to
+        Artshaala and nothing will be shipped. The details you enter are saved
+        only in this browser so the next page can display them.
+      </p>
+
+      <section id="empty" hidden>
+        <h2>Your cart is empty</h2>
+        <p class="lead">Add a piece to your cart before checking out.</p>
+        <p><a class="btn" href="shop.html">Go to Shop</a></p>
+      </section>
+
+      <div class="co" id="co" hidden>
+        <form id="f" novalidate aria-labelledby="fh">
+          <h2 id="fh" style="margin-top: 0">Delivery details</h2>
+          <div class="fg" id="fields"></div>
+          <p class="err" id="status" role="alert" style="margin-top: 1rem"></p>
+          <button class="btn" type="submit" style="margin-top: 0.6rem">
+            Place demo order
+          </button>
+        </form>
+        <aside class="sum" aria-labelledby="sh">
+          <h2 id="sh" style="margin-top: 0">Order summary</h2>
+          <ul id="lines"></ul>
+          <div class="tr"><span>Subtotal</span><span id="sub"></span></div>
+          <div class="tr"><span>Shipping</span><span id="ship"></span></div>
+          <div class="tr t"><span>Total</span><span id="tot"></span></div>
+          <p style="font-size: 0.85rem; color: var(--soft)">
+            Shipping matches the cart page. Taxes are not calculated in this
+            demo.
+          </p>
+          <p style="font-size: 0.85rem"><a href="cart.html">Edit cart</a></p>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      <nav class="fl" aria-label="Footer">
+        <a href="shop.html">All earrings</a
+        ><a href="shop.html?sort=newest">New arrivals</a
+        ><a href="about.html">About</a><a href="contact.html">Contact</a
+        ><a href="privacy-policy.html">Privacy policy</a>
+      </nav>
+      <p>
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s) => document.querySelector(s);
+        const KEY = "artshaala-cart",
+          ORD = "artshaala-demo-order",
+          SHIP = 99;
+        const R = (n) => "₹" + n;
+        /* Same ids, names, prices and image paths as shop/product/cart: [name, price, image] */
+        const P = {
+          "surya-kalash": ["Surya Kalash", 849, "images/SURYA KALASH.png"],
+          "kalamkari-bloom": [
+            "Kalamkari Bloom",
+            699,
+            "images/KALAMKARI BLOOM.png",
+          ],
+          "crescent-mahira": [
+            "Crescent Mahira",
+            749,
+            "images/CRESENT MAHIRA.png",
+          ],
+          "kohl-muse": ["Kohl Muse", 599, "images/KOHL MUSE.png"],
+          "painted-sunshine": [
+            "Painted Sunshine",
+            649,
+            "images/PAINTED SUNSHINE 1.png",
+          ],
+          "black-lotus": ["Black Lotus", 899, "images/BLACK LOTUS.png"],
+          "dhruv-phool": ["Dhruv Phool", 799, "images/DHRUV PHOOL.png"],
+          "sanjh-kamla": ["Sanjh Kamla", 649, "images/SANJH KAMLA.png"],
+          "sunrise-petal": [
+            "Sunrise Petal",
+            749,
+            "images/PAINTED SUNSHINE.png",
+          ],
+        };
+        let items = [];
+        try {
+          const r = JSON.parse(localStorage.getItem(KEY));
+          if (Array.isArray(r))
+            items = r
+              .filter(
+                (x) =>
+                  x && P[x.id] && Number.isFinite(x.quantity) && x.quantity > 0,
+              )
+              .map((x) => ({ id: x.id, quantity: Math.floor(x.quantity) }));
+        } catch {}
+        const qty = items.reduce((s, x) => s + x.quantity, 0);
+        $("#cc").textContent = qty || "";
+        if (!items.length) {
+          $("#empty").hidden = false;
+          return;
+        }
+        $("#co").hidden = false;
+
+        let sub = 0;
+        $("#lines").innerHTML = items
+          .map((x) => {
+            const [n, p, im] = P[x.id],
+              t = p * x.quantity;
+            sub += t;
+            return `<li><img src="${im}" alt=""><span>${n}<br><small>${x.quantity} × ${R(p)}</small></span><span>${R(t)}</span></li>`;
+          })
+          .join("");
+        $("#sub").textContent = R(sub);
+        $("#ship").textContent = R(SHIP);
+        $("#tot").textContent = R(sub + SHIP);
+
+        /* key, label, type, autocomplete, width class, validator (true = valid) */
+        const F = [
+          [
+            "name",
+            "Full name",
+            "text",
+            "name",
+            "w",
+            (v) => v.length > 1 || "Enter your full name.",
+          ],
+          [
+            "email",
+            "Email",
+            "email",
+            "email",
+            "",
+            (v) =>
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ||
+              "Enter a valid email address.",
+          ],
+          [
+            "phone",
+            "Phone",
+            "tel",
+            "tel",
+            "",
+            (v) =>
+              /^(\+91|91|0)?[6-9]\d{9}$/.test(v.replace(/[\s-]/g, "")) ||
+              "Enter a 10-digit Indian mobile number.",
+          ],
+          [
+            "address1",
+            "Address line 1",
+            "text",
+            "address-line1",
+            "w",
+            (v) => v.length > 4 || "Enter your street address.",
+          ],
+          [
+            "address2",
+            "Address line 2 (optional)",
+            "text",
+            "address-line2",
+            "w",
+            () => true,
+          ],
+          [
+            "city",
+            "City",
+            "text",
+            "address-level2",
+            "",
+            (v) => v.length > 1 || "Enter your city.",
+          ],
+          [
+            "state",
+            "State / UT",
+            "text",
+            "address-level1",
+            "",
+            (v) => v.length > 1 || "Enter your state or union territory.",
+          ],
+          [
+            "pin",
+            "PIN code",
+            "text",
+            "postal-code",
+            "",
+            (v) => /^[1-9]\d{5}$/.test(v) || "Enter a 6-digit PIN code.",
+          ],
+          [
+            "country",
+            "Country",
+            "text",
+            "country-name",
+            "",
+            (v) => v.length > 0 || "Enter your country.",
+          ],
+        ];
+        $("#fields").innerHTML = F.map(
+          ([k, l, t, a, w]) =>
+            `<div class="fld ${w}"><label for="${k}">${l}</label><input id="${k}" name="${k}" type="${t}" autocomplete="${a}"${k === "pin" ? ' inputmode="numeric" maxlength="6"' : ""}${k === "country" ? ' value="India"' : ""}${k === "address2" ? "" : " required"} aria-describedby="e-${k}"><span class="err" id="e-${k}"></span></div>`,
+        ).join("");
+
+        $("#f").addEventListener("submit", (e) => {
+          e.preventDefault();
+          let first = null;
+          const data = {};
+          F.forEach(([k, , , , , chk]) => {
+            const i = $("#" + k),
+              v = i.value.trim(),
+              r = chk(v),
+              bad = r !== true;
+            $("#e-" + k).textContent = bad ? r : "";
+            i.setAttribute("aria-invalid", bad);
+            if (bad && !first) first = i;
+            data[k] = v;
+          });
+          const status = $("#status");
+          if (first) {
+            status.textContent = "Please correct the fields marked below.";
+            first.focus();
+            return;
+          }
+          status.textContent = "";
+          const lines = items.map((x) => ({
+            id: x.id,
+            name: P[x.id][0],
+            price: P[x.id][1],
+            quantity: x.quantity,
+            total: P[x.id][1] * x.quantity,
+          }));
+          const subtotal = lines.reduce((s, l) => s + l.total, 0);
+          const order = {
+            demo: true,
+            ref: "DEMO-" + Date.now().toString(36).toUpperCase(),
+            placedAt: new Date().toISOString(),
+            customer: data,
+            items: lines,
+            subtotal,
+            shipping: SHIP,
+            total: subtotal + SHIP,
+          };
+          try {
+            localStorage.setItem(ORD, JSON.stringify(order));
+            localStorage.removeItem(KEY);
+          } catch {
+            status.textContent =
+              "This browser blocked local storage, so the demo order could not be recorded.";
+            return;
+          }
+          location.href = "order-confirmation.html";
+        });
+      })();
+    </script>
+  </body>
+</html>

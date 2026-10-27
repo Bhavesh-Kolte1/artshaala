@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Cart — Artshaala</title>
+    <meta
+      name="description"
+      content="Review the hand-painted pieces you've chosen before checkout."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&family=Kalam:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ivory: #f4ead6;
+        --parchment: #e8d8b9;
+        --paper-deep: #dcc8a0;
+        --ink: #2b201b;
+        --ink-soft: #5b4a3f;
+        --vermilion: #b5301d;
+        --turmeric: #d8a01c;
+        --marigold: #df7a1c;
+        --teal: #1d6b6c;
+        --indigo: #29397a;
+        --terracotta: #a4502f;
+        --wine: #571d2c;
+        --gold: #a5832f;
+        --f-display: "Cormorant Garamond", "Rozha One", Georgia, serif;
+        --f-body: "Jost", system-ui, sans-serif;
+        --f-hand: "Kalam", "Segoe Script", cursive;
+        --track: 0.22em;
+        --pad: clamp(1rem, 4vw, 3.5rem);
+        --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+        --chain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10'%3E%3Cpath d='M12 1l5 4-5 4-5-4z' fill='none' stroke='%23a5832f' stroke-width='1.2'/%3E%3Ccircle cx='0' cy='5' r='1.2' fill='%23a5832f'/%3E%3Ccircle cx='24' cy='5' r='1.2' fill='%23a5832f'/%3E%3C/svg%3E");
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font: 400 1rem/1.6 var(--f-body);
+        color: var(--ink);
+        background: var(--ivory) var(--grain);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--indigo);
+        outline-offset: 3px;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--f-display);
+        font-weight: 600;
+        line-height: 1.05;
+      }
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        font-weight: 500;
+        color: var(--terracotta);
+      }
+      .rule {
+        height: 10px;
+        background: var(--chain) repeat-x center;
+      }
+      .btn {
+        display: inline-block;
+        font: 500 0.74rem/1 var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.05rem 1.5rem;
+        border: 1.5px solid var(--ink);
+        background: var(--vermilion);
+        color: var(--ivory);
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0 var(--ink);
+      }
+      .btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0 var(--ink);
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.block {
+        display: block;
+        width: 100%;
+        text-align: center;
+      }
+      .btn[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: 2px 2px 0 var(--ink) !important;
+      }
+
+      /* Header (shared) */
+      .strip {
+        background: var(--wine);
+        color: var(--parchment);
+        text-align: center;
+        font-size: 0.68rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        padding: 0.55rem 1rem;
+      }
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--ivory) var(--grain);
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .site-head::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -11px;
+        height: 10px;
+        background: var(--chain) repeat-x center;
+        pointer-events: none;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.8rem var(--pad);
+        max-width: 1440px;
+        margin: auto;
+      }
+      .logo {
+        font: 700 1.7rem/1 var(--f-display);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+      .logo b {
+        color: var(--vermilion);
+      }
+      .links {
+        display: none;
+        gap: 2rem;
+        list-style: none;
+        padding: 0;
+      }
+      .links a {
+        font-size: 0.72rem;
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.4rem 0;
+        background: linear-gradient(var(--vermilion), var(--vermilion)) 0 100%/0
+          2px no-repeat;
+        transition: background-size 0.25s;
+      }
+      .links a:hover,
+      .links a[aria-current] {
+        background-size: 100% 2px;
+      }
+      .tools {
+        display: flex;
+        gap: 0.2rem;
+      }
+      .ic {
+        position: relative;
+        background: none;
+        border: 0;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .ic svg {
+        width: 22px;
+        height: 22px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+      }
+      .ic i {
+        position: absolute;
+        top: 4px;
+        right: 2px;
+        min-width: 17px;
+        height: 17px;
+        border-radius: 9px;
+        background: var(--vermilion);
+        color: var(--ivory);
+        font: 500 0.62rem/17px var(--f-body);
+        text-align: center;
+        font-style: normal;
+      }
+      .ic i[data-n="0"],
+      .ic i:empty {
+        display: none;
+      }
+      .ic[aria-current] {
+        outline: 1.5px solid var(--ink);
+        outline-offset: -1px;
+      }
+      .burger {
+        display: grid;
+      }
+      .site-head.open .links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        background: var(--ivory) var(--grain);
+        padding: 1.2rem var(--pad) 1.6rem;
+        border-bottom: 1.5px solid var(--ink);
+      }
+      @media (min-width: 900px) {
+        .links {
+          display: flex;
+        }
+        .burger {
+          display: none;
+        }
+      }
+
+      /* Breadcrumb + hero */
+      .crumb {
+        max-width: 1440px;
+        margin: auto;
+        padding: 1.4rem var(--pad) 0;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .crumb a {
+        text-decoration: none;
+      }
+      .crumb a:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .crumb span[aria-hidden] {
+        margin: 0 0.4rem;
+        color: var(--gold);
+      }
+      .crumb .current {
+        color: var(--ink);
+      }
+      .cart-hero {
+        max-width: 1440px;
+        margin: auto;
+        padding: 1rem var(--pad) 2rem;
+      }
+      .cart-hero h1 {
+        font-size: clamp(2.4rem, 6vw, 3.6rem);
+        color: var(--wine);
+        margin-top: 0.5rem;
+      }
+
+      /* Cart layout */
+      .cart-wrap {
+        max-width: 1440px;
+        margin: auto;
+        padding: 0 var(--pad) 5rem;
+        display: grid;
+        gap: 2rem;
+      }
+      @media (min-width: 900px) {
+        .cart-wrap {
+          grid-template-columns: 1fr 360px;
+          align-items: start;
+        }
+      }
+
+      .cart-items {
+        display: grid;
+        gap: 0;
+      }
+      .item {
+        display: grid;
+        grid-template-columns: 96px 1fr;
+        gap: 1rem;
+        padding: 1.4rem 0;
+        border-top: 1.5px solid var(--ink);
+      }
+      .cart-items .item:last-child {
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .item-ph {
+        aspect-ratio: 4/5;
+        background: var(--c, var(--parchment)) var(--grain);
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -5px;
+        padding: 0.4rem;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      .item-ph img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        min-width: 0;
+      }
+      .item-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+      .item-top h3 {
+        font-size: 1.3rem;
+      }
+      .item-top h3 a {
+        text-decoration: none;
+        color: var(--wine);
+      }
+      .item-top h3 a:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .item-top p {
+        font-size: 0.86rem;
+        color: var(--ink-soft);
+        margin-top: 0.15rem;
+      }
+      .remove {
+        background: none;
+        border: 0;
+        padding: 0;
+        font: 500 0.66rem var(--f-body);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--vermilion);
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .remove:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .item-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      .qty {
+        display: flex;
+        align-items: stretch;
+        border: 1.5px solid var(--ink);
+        background: var(--ivory);
+      }
+      .qty button {
+        width: 42px;
+        min-width: 42px;
+        min-height: 42px;
+        background: none;
+        border: 0;
+        font-size: 1.1rem;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .qty button:hover {
+        background: var(--parchment);
+      }
+      .qty .qty-val {
+        min-width: 2.4rem;
+        display: grid;
+        place-items: center;
+        border-left: 1.5px solid var(--ink);
+        border-right: 1.5px solid var(--ink);
+        font: inherit;
+      }
+      .line-price {
+        font: 600 1.15rem var(--f-display);
+      }
+
+      /* Summary */
+      .summary {
+        border: 1.5px solid var(--ink);
+        outline: 1px solid var(--gold);
+        outline-offset: -7px;
+        background: var(--parchment) var(--grain);
+        padding: 1.6rem;
+        display: grid;
+        gap: 1rem;
+      }
+      .summary h2 {
+        font-size: 1.5rem;
+        color: var(--wine);
+      }
+      .sum-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+      }
+      .sum-row.total {
+        border-top: 1.5px solid var(--ink);
+        padding-top: 0.8rem;
+        font: 600 1.3rem var(--f-display);
+        color: var(--ink);
+      }
+      .sum-actions {
+        display: grid;
+        gap: 0.7rem;
+        margin-top: 0.4rem;
+      }
+      .sum-note {
+        font: 0.85rem var(--f-hand);
+        color: var(--ink-soft);
+      }
+
+      /* Empty state */
+      .state {
+        max-width: 1440px;
+        margin: auto;
+        padding: 6rem var(--pad);
+        text-align: center;
+        display: grid;
+        gap: 1.4rem;
+        justify-items: center;
+      }
+      .state h1 {
+        font-size: clamp(2.4rem, 7vw, 4rem);
+        color: var(--wine);
+      }
+      .state p {
+        max-width: 30rem;
+        color: var(--ink-soft);
+        font-size: 1.05rem;
+      }
+
+      /* Footer (shared) */
+      footer {
+        background: var(--wine);
+        color: var(--parchment);
+        padding: 0 var(--pad) 2rem;
+      }
+      footer .rule {
+        margin: 0 calc(-1 * var(--pad));
+        position: relative;
+        top: -5px;
+      }
+      .foot {
+        max-width: 1440px;
+        margin: auto;
+        display: grid;
+        gap: 2.5rem;
+        padding: 3.5rem 0 2rem;
+      }
+      @media (min-width: 900px) {
+        .foot {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .foot h4 {
+        font: 500 0.7rem var(--f-body);
+        letter-spacing: var(--track);
+        text-transform: uppercase;
+        color: var(--turmeric);
+        margin-bottom: 1rem;
+      }
+      .foot ul {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+      }
+      .foot a {
+        text-decoration: none;
+        opacity: 0.9;
+      }
+      .foot a:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      .copy {
+        max-width: 1440px;
+        margin: auto;
+        font-size: 0.78rem;
+        opacity: 0.7;
+        border-top: 1px solid rgba(232, 216, 185, 0.3);
+        padding-top: 1.2rem;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="strip">
+      Hand-painted &bull; Handcrafted &bull; Made with imagination
+    </div>
+
+    <header class="site-head" id="head">
+      <div class="nav">
+        <a class="logo" href="index.html" aria-label="Artshaala home"
+          >Art<b>shaala</b></a
+        >
+        <nav aria-label="Main">
+          <ul class="links" id="links">
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="journal.html">Journal</a></li>
+          </ul>
+        </nav>
+        <div class="tools">
+          <button class="ic" aria-label="Search">
+            <svg viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 5 5" />
+            </svg>
+          </button>
+          <button class="ic" aria-label="Wishlist">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"
+              /></svg
+            ><i id="wc" data-n="0"></i>
+          </button>
+          <a class="ic" href="cart.html" aria-current="page" aria-label="Cart"
+            ><svg viewBox="0 0 24 24">
+              <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
+            ><i id="cc" data-n="0"></i
+          ></a>
+          <button
+            class="ic burger"
+            id="burger"
+            aria-expanded="false"
+            aria-controls="links"
+            aria-label="Menu"
+          >
+            <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span>
+      <span class="current">Cart</span>
+    </nav>
+
+    <section class="cart-hero">
+      <span class="eyebrow">The Art Shaala</span>
+      <h1>Your Cart</h1>
+    </section>
+
+    <main id="cartMain"></main>
+
+    <footer>
+      <div class="rule" aria-hidden="true"></div>
+      <div class="foot">
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html">All earrings</a></li>
+            <li><a href="shop.html?sort=newest">New arrivals</a></li>
+            <li><a href="gift-cards.html">Gift cards</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+                        <li><a href="about.html">The story</a></li>
+            <li><a href="privacy-policy.html">Privacy policy</a></li>
+            <li><a href="journal.html">Journal</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Help</h4>
+          <ul>
+            <li><a href="shipping.html">Shipping</a></li>
+            <li><a href="returns.html">Returns</a></li>
+            <li><a href="care-guide.html">Care guide</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Social</h4>
+          <ul>
+            <li>
+              <a href="https://www.instagram.com/" rel="noopener">Instagram</a>
+            </li>
+            <li>
+              <a href="https://www.pinterest.com/" rel="noopener">Pinterest</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="copy">
+        &copy; 2026 Artshaala. Every pair painted by hand, so no two are exactly
+        alike.
+      </p>
+    </footer>
+
+    <script>
+      (() => {
+        const $ = (s, r = document) => r.querySelector(s),
+          $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const setN = (el, n) => {
+          el.dataset.n = n;
+          el.textContent = n || "";
+        };
+
+        /* ===== Central product data (kept in sync with product.html / shop.html) ===== */
+        const products = {
+          "surya-kalash": {
+            name: "Surya Kalash",
+            price: 849,
+            badge: "Bestseller",
+            c: "#ecc9a2",
+            img: "images/SURYA KALASH.png",
+            alt: "Surya Kalash earrings: red and yellow sun mandalas with brass drops on a stand",
+            d: "Vermilion sun mandalas with antique brass drops.",
+          },
+          "kalamkari-bloom": {
+            name: "Kalamkari Bloom",
+            price: 699,
+            c: "#bfd9d0",
+            img: "images/KALAMKARI BLOOM.png",
+            alt: "Kalamkari Bloom earrings: turquoise peonies outlined in gold with blue glass beads",
+            d: "Turquoise peonies outlined in gold, with glass beads.",
+          },
+          "crescent-mahira": {
+            name: "Crescent Mahira",
+            price: 749,
+            badge: "New",
+            c: "#c9b9d8",
+            img: "images/CRESENT MAHIRA.png",
+            alt: "Crescent Mahira earrings: lilac dot-work half moons with silver and lilac beads on an open book",
+            d: "Lilac dot-work half moons over oxidised silver.",
+          },
+          "kohl-muse": {
+            name: "Kohl Muse",
+            price: 599,
+            c: "#dcc8a0",
+            img: "images/KOHL MUSE.png",
+            alt: "Kohl Muse earrings: black hexagons with ivory block-print and silver bells",
+            d: "Hexagons in kohl black, block-printed in ivory.",
+          },
+          "painted-sunshine": {
+            name: "Painted Sunshine",
+            price: 649,
+            badge: "Limited",
+            c: "#e9c470",
+            img: "images/PAINTED SUNSHINE 1.png",
+            alt: "Painted Sunshine earrings: yellow sunflowers on periwinkle discs with jhumka drops",
+            d: "Sunflowers on a wash of periwinkle, with jhumka drops.",
+          },
+          "black-lotus": {
+            name: "Black Lotus",
+            price: 899,
+            c: "#d9b2a4",
+            img: "images/BLACK LOTUS.png",
+            alt: "Black Lotus earrings: black half moons with ivory dots and silver pearl-fringed crescents",
+            d: "Ink-black arches with pearl fringe and silver filigree.",
+          },
+          "dhruv-phool": {
+            name: "Dhruv Phool",
+            price: 799,
+            c: "#dcc8a0",
+            img: "images/DHRUV PHOOL.png",
+            alt: "Dhruv Phool earrings: black and ivory mandala discs and half moons with silver ghungroo",
+            d: "Ivory mandalas on kohl black, with silver ghungroo.",
+          },
+          "sanjh-kamla": {
+            name: "Sanjh Kamla",
+            price: 649,
+            c: "#c3cae0",
+            img: "images/SANJH KAMLA.png",
+            alt: "Sanjh Kamla earrings: white lotus on deep indigo discs with silver flower charms",
+            d: "White lotus on deep indigo, with silver flower charms.",
+          },
+          "sunrise-petal": {
+            name: "Sunrise Petal",
+            price: 749,
+            c: "#e6c9a6",
+            img: "images/PAINTED SUNSHINE.png",
+            alt: "Sunrise Petal earring: a teal disc with a rising marigold sun and jhumka drop, worn on the ear",
+            d: "A marigold sun rising over peacock teal, with a jhumka drop.",
+          },
+        };
+
+        /* ===== Cart (persisted via localStorage, shared across pages) ===== */
+        const CART_KEY = "artshaala-cart";
+        const SHIPPING = 99;
+
+        function readCart() {
+          let raw;
+          try {
+            raw = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+          } catch {
+            raw = [];
+          }
+          if (!Array.isArray(raw)) raw = [];
+          const clean = raw
+            .filter(
+              (row) =>
+                row &&
+                products[row.id] &&
+                Number.isFinite(row.quantity) &&
+                row.quantity > 0,
+            )
+            .map((row) => ({ id: row.id, quantity: Math.floor(row.quantity) }));
+          if (clean.length !== raw.length) writeCart(clean);
+          return clean;
+        }
+        function writeCart(rows) {
+          localStorage.setItem(CART_KEY, JSON.stringify(rows));
+        }
+        function cartQty(rows) {
+          return rows.reduce((n, r) => n + r.quantity, 0);
+        }
+        function refreshBadge() {
+          setN($("#cc"), cartQty(readCart()));
+        }
+
+        function itemRow(row) {
+          const p = products[row.id];
+          const lineTotal = (p.price || 0) * row.quantity;
+          return `
+<article class="item" style="--c:${p.c}">
+  <div class="item-ph"><img src="${p.img}" alt="${p.alt}" loading="lazy"></div>
+  <div class="item-info">
+    <div class="item-top">
+      <div>
+        <h3><a href="product.html?id=${row.id}">${p.name}</a></h3>
+        <p>${p.d}</p>
+      </div>
+      <button type="button" class="remove" data-id="${row.id}" aria-label="Remove ${p.name} from cart">Remove</button>
+    </div>
+    <div class="item-bottom">
+      <div class="qty">
+        <button type="button" class="qty-dec" data-id="${row.id}" aria-label="Decrease quantity of ${p.name}">&minus;</button>
+        <span class="qty-val" aria-live="polite">${row.quantity}</span>
+        <button type="button" class="qty-inc" data-id="${row.id}" aria-label="Increase quantity of ${p.name}">+</button>
+      </div>
+      <span class="line-price">₹${lineTotal}</span>
+    </div>
+  </div>
+</article>`;
+        }
+
+        function renderEmpty() {
+          $("#cartMain").innerHTML = `
+    <section class="state">
+      <span class="eyebrow">The Art Shaala</span>
+      <h1>Your cart is quiet.</h1>
+      <p>There are no pieces here yet. Have a look through the collection and find something that feels like you.</p>
+      <a class="btn" href="shop.html">Go to Shop</a>
+    </section>`;
+        }
+
+        function render() {
+          const rows = readCart();
+          refreshBadge();
+          if (!rows.length) return renderEmpty();
+
+          const subtotal = rows.reduce(
+            (s, r) => s + (products[r.id].price || 0) * r.quantity,
+            0,
+          );
+          const shipping = rows.length ? SHIPPING : 0;
+          const total = subtotal + shipping;
+
+          $("#cartMain").innerHTML = `
+    <div class="cart-wrap">
+      <div class="cart-items">${rows.map(itemRow).join("")}</div>
+      <aside class="summary" aria-labelledby="sum-h">
+        <h2 id="sum-h">Order summary</h2>
+        <div class="sum-row"><span>Subtotal</span><span>₹${subtotal}</span></div>
+        <div class="sum-row"><span>Shipping</span><span>₹${shipping}</span></div>
+        <div class="sum-row total"><span>Total</span><span>₹${total}</span></div>
+        <div class="sum-actions">
+          <a class="btn block" href="checkout.html">Proceed to checkout</a>
+          <a class="btn alt block" href="shop.html">Continue shopping</a>
+        </div>
+        <p class="sum-note">Taxes, if any, are calculated at checkout.</p>
+      </aside>
+    </div>`;
+        }
+
+        $("#cartMain").addEventListener("click", (e) => {
+          const dec = e.target.closest(".qty-dec");
+          const inc = e.target.closest(".qty-inc");
+          const rm = e.target.closest(".remove");
+          if (!dec && !inc && !rm) return;
+          const id = (dec || inc || rm).dataset.id;
+          let rows = readCart();
+          if (rm) {
+            rows = rows.filter((r) => r.id !== id);
+          } else {
+            const row = rows.find((r) => r.id === id);
+            if (row) {
+              if (inc) row.quantity += 1;
+              if (dec) row.quantity = Math.max(1, row.quantity - 1);
+            }
+          }
+          writeCart(rows);
+          render();
+        });
+
+        render();
+
+        /* ===== Header menu (shared) ===== */
+        const head = $("#head"),
+          burger = $("#burger");
+        const closeMenu = () => {
+          head.classList.remove("open");
+          burger.setAttribute("aria-expanded", false);
+        };
+        burger.addEventListener("click", () =>
+          burger.setAttribute("aria-expanded", head.classList.toggle("open")),
+        );
+        $$("#links a").forEach((a) => a.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") closeMenu();
+        });
+      })();
+    </script>
+  </body>
+</html>

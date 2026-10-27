@@ -833,8 +833,8 @@
         <nav aria-label="Main">
           <ul class="links" id="links">
             <li><a href="shop.html">Shop</a></li>
-            <li><a href="collections.html">Collections</a></li>
-            <li><a href="about.html">About</a></li>
+                        <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
             <li><a href="journal.html">Journal</a></li>
           </ul>
         </nav>
@@ -852,11 +852,11 @@
               /></svg
             ><i id="wc" data-n="0"></i>
           </button>
-          <button class="ic" aria-label="Cart">
-            <svg viewBox="0 0 24 24">
+          <a class="ic" href="cart.html" aria-label="Cart"
+            ><svg viewBox="0 0 24 24">
               <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
-            ><i id="cc" data-n="0"></i>
-          </button>
+            ><i id="cc" data-n="0"></i
+          ></a>
           <button
             class="ic burger"
             id="burger"
@@ -879,7 +879,6 @@
           <h4>Shop</h4>
           <ul>
             <li><a href="shop.html">All earrings</a></li>
-            <li><a href="collections.html">By mood</a></li>
             <li><a href="shop.html?sort=newest">New arrivals</a></li>
             <li><a href="gift-cards.html">Gift cards</a></li>
           </ul>
@@ -887,7 +886,8 @@
         <div>
           <h4>About</h4>
           <ul>
-            <li><a href="about.html">The story</a></li>
+                        <li><a href="about.html">The story</a></li>
+            <li><a href="privacy-policy.html">Privacy policy</a></li>
             <li><a href="journal.html">Journal</a></li>
           </ul>
         </div>
@@ -1036,34 +1036,35 @@
               Closure: "Post + hook",
             },
           },
+
           "dhruv-phool": {
             name: "Dhruv Phool",
-            price: 0,
+            price: 799,
             mood: "heritage",
             c: "#dcc8a0",
             img: "images/DHRUV PHOOL.png",
             alt: "Dhruv Phool earrings: black and ivory mandala discs and half moons with silver ghungroo",
-            d: "Ivory mandalas on kohl black, with silver ghungroo. (Pricing and details coming soon — placeholder listing.)",
+            d: "Ivory mandalas on kohl black, with silver ghungroo.",
             attrs: {},
           },
           "sanjh-kamla": {
             name: "Sanjh Kamla",
-            price: 0,
+            price: 649,
             mood: "monsoon",
             c: "#c3cae0",
             img: "images/SANJH KAMLA.png",
             alt: "Sanjh Kamla earrings: white lotus on deep indigo discs with silver flower charms",
-            d: "White lotus on deep indigo, with silver flower charms. (Pricing and details coming soon — placeholder listing.)",
+            d: "White lotus on deep indigo, with silver flower charms.",
             attrs: {},
           },
           "sunrise-petal": {
-            name: "Painted Sunshine I",
-            price: 0,
+            name: "Sunrise Petal",
+            price: 749,
             mood: "sunny",
             c: "#e6c9a6",
             img: "images/PAINTED SUNSHINE.png",
-            alt: "Painted Sunshine I earring: a teal disc with a rising marigold sun and jhumka drop, worn on the ear",
-            d: "A marigold sun rising over peacock teal, with a jhumka drop. (Pricing and details coming soon — placeholder listing.)",
+            alt: "Sunrise Petal earring: a teal disc with a rising marigold sun and jhumka drop, worn on the ear",
+            d: "A marigold sun rising over peacock teal, with a jhumka drop.",
             attrs: {},
           },
         };
@@ -1079,12 +1080,52 @@
           "sunrise-petal",
         ];
 
-        let cart = 0;
         const wished = new Set();
         const setN = (el, n) => {
           el.dataset.n = n;
           el.textContent = n || "";
         };
+
+        /* ===== Cart (persisted via localStorage, shared across pages) ===== */
+        const CART_KEY = "artshaala-cart";
+        function readCart() {
+          let raw;
+          try {
+            raw = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+          } catch {
+            raw = [];
+          }
+          if (!Array.isArray(raw)) raw = [];
+          const clean = raw
+            .filter(
+              (row) =>
+                row &&
+                products[row.id] &&
+                Number.isFinite(row.quantity) &&
+                row.quantity > 0,
+            )
+            .map((row) => ({ id: row.id, quantity: Math.floor(row.quantity) }));
+          if (clean.length !== raw.length) writeCart(clean);
+          return clean;
+        }
+        function writeCart(rows) {
+          localStorage.setItem(CART_KEY, JSON.stringify(rows));
+        }
+        function cartQty(rows) {
+          return rows.reduce((n, r) => n + r.quantity, 0);
+        }
+        function addToCart(id, qty) {
+          const rows = readCart();
+          const row = rows.find((r) => r.id === id);
+          if (row) row.quantity += qty;
+          else rows.push({ id, quantity: qty });
+          writeCart(rows);
+          refreshCartBadge();
+        }
+        function refreshCartBadge() {
+          setN($("#cc"), cartQty(readCart()));
+        }
+        refreshCartBadge();
 
         const cardHTML = (id, p) => `
 <a class="card" href="product.html?id=${id}" style="--c:${p.c}">
@@ -1242,14 +1283,14 @@
           if (addBtn)
             addBtn.addEventListener("click", () => {
               const n = Math.max(1, +qtyVal.value || 1);
-              cart += n;
-              setN($("#cc"), cart);
+              addToCart(id, n);
               showToast(`${p.name} added to cart`);
             });
           const buyBtn = $("#buyNow");
           if (buyBtn)
             buyBtn.addEventListener("click", () => {
-              showToast("Checkout isn't available in this preview yet.");
+              addToCart(id, Math.max(1, +qtyVal.value || 1));
+              location.href = "checkout.html";
             });
 
           /* Wishlist */

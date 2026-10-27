@@ -531,8 +531,8 @@
         <nav aria-label="Main">
           <ul class="links" id="links">
             <li><a href="shop.html" aria-current="page">Shop</a></li>
-            <li><a href="collections.html">Collections</a></li>
-            <li><a href="about.html">About</a></li>
+                        <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </nav>
         <div class="tools">
@@ -549,11 +549,11 @@
               /></svg
             ><i id="wc" data-n="0"></i>
           </button>
-          <button class="ic" aria-label="Cart">
+          <a class="ic" href="cart.html" aria-label="Cart">
             <svg viewBox="0 0 24 24">
               <path d="M5 8h14l-1 12H6zM9 8V6a3 3 0 0 1 6 0v2" /></svg
             ><i id="cc" data-n="0"></i>
-          </button>
+          </a>
           <button
             class="ic burger"
             id="burger"
@@ -617,14 +617,14 @@
           <h4>Shop</h4>
           <ul>
             <li><a href="shop.html">All earrings</a></li>
-            <li><a href="collections.html">By mood</a></li>
             <li><a href="shop.html?sort=newest">New arrivals</a></li>
           </ul>
         </div>
         <div>
           <h4>About</h4>
           <ul>
-            <li><a href="about.html">The story</a></li>
+                        <li><a href="about.html">The story</a></li>
+            <li><a href="privacy-policy.html">Privacy policy</a></li>
           </ul>
         </div>
         <div>
@@ -770,7 +770,6 @@
         const heart =
           '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg>';
         const wished = new Set();
-        let cart = 0;
         const grid = $("#grid"),
           mood = $("#mood"),
           sort = $("#sort");
@@ -778,6 +777,47 @@
           el.dataset.n = n;
           el.textContent = n || "";
         };
+
+        /* ===== Cart (same key/shape as product.html + cart.html) ===== */
+        const CART_KEY = "artshaala-cart";
+        const validIds = new Set(P.map((p) => p.id));
+        function readCart() {
+          let raw;
+          try {
+            raw = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+          } catch {
+            raw = [];
+          }
+          if (!Array.isArray(raw)) raw = [];
+          return raw
+            .filter(
+              (r) =>
+                r &&
+                validIds.has(r.id) &&
+                Number.isFinite(r.quantity) &&
+                r.quantity > 0,
+            )
+            .map((r) => ({ id: r.id, quantity: Math.floor(r.quantity) }));
+        }
+        function refreshCartBadge() {
+          setN(
+            $("#cc"),
+            readCart().reduce((n, r) => n + r.quantity, 0),
+          );
+        }
+        function addToCart(id, qty) {
+          if (!validIds.has(id)) return;
+          const rows = readCart();
+          const row = rows.find((r) => r.id === id);
+          if (row) row.quantity += qty;
+          else rows.push({ id, quantity: qty });
+          try {
+            localStorage.setItem(CART_KEY, JSON.stringify(rows));
+          } catch {}
+          refreshCartBadge();
+        }
+        refreshCartBadge();
+        window.addEventListener("pageshow", refreshCartBadge);
 
         const render = () => {
           let list = P.filter(
@@ -795,7 +835,7 @@
 <button class="wish" data-id="${p.id}" aria-pressed="${wished.has(p.id)}" aria-label="Save ${p.name} to wishlist">${heart}</button>
 <a href="product.html?id=${p.id}" aria-label="View ${p.name}"><img src="${p.img}" alt="${p.alt}" loading="lazy"></a></div>
 <div class="meta"><a href="product.html?id=${p.id}"><h3>${p.name}</h3><p>${p.d}</p></a>
-<div class="buy"><span class="price">₹${p.price}</span><button class="btn sm add" data-name="${p.name}" aria-label="Quick add ${p.name} to cart">Quick add</button></div></div>
+<div class="buy"><span class="price">₹${p.price}</span><button class="btn sm add" data-id="${p.id}" data-name="${p.name}" aria-label="Quick add ${p.name} to cart">Quick add</button></div></div>
 </article>`,
             )
             .join("");
@@ -813,7 +853,7 @@
             setN($("#wc"), wished.size);
           }
           if (a && !a.disabled) {
-            setN($("#cc"), ++cart);
+            addToCart(a.dataset.id, 1);
             a.textContent = "Added";
             a.disabled = true;
             setTimeout(() => {
